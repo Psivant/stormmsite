@@ -1,15 +1,15 @@
 # Table of Contents
 
-1. [Introduction](/why-stormm)
+1. [Introduction](./why-stormm)
    - Overview of the project's purpose and scope.
 
-2. [Installation Instructions](/get-started)
+2. [Installation Instructions](./get-started)
    - Steps to install and configure the project.
-   - [Prerequisites](/get-started#installation-instructions)
+   - [Prerequisites](./get-started#installation-instructions)
      - Software and tools required before installation.
    - [Installation Steps](#installation-steps#installaion-instructions)
      - Detailed steps for setting up the project.
-   - [Docker](/installation/docker)
+   - [Docker](./installation/docker)
      - Steps to use one of the included Dockerfiles to spin up a containerized version of STORMM
    - [GCP: Psivant](#GCP)
      - Pulling one of the premade STORMM Containers on GCP
