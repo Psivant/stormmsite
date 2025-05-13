@@ -12,6 +12,7 @@ export default defineUserConfig({
     logo: '',
 
     navbar: ['/', '/get-started', '/contents'],
+    contributors: false,
   }),
 
   bundler: viteBundler(),
