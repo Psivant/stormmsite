@@ -1,0 +1,48 @@
+name: Deploy VuePress to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch if it's not 'main'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # or whatever version your VuePress project requires
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build VuePress site
+        run: npm run docs:build
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          # Clone the repository and checkout or create gh-pages branch
+          git clone --depth=1 --branch=gh-pages https://github.com/${{ github.repository }} gh-pages || git clone --depth=1 https://github.com/${{ github.repository }} gh-pages
+          cd gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages
+
+          # Remove all existing files
+          rm -rf *
+
+          # Copy new build from VuePress output
+          cp -r ../docs/.vuepress/dist/* .
+
+          # Commit and push
+          git add .
+          git commit -m "Deploy VuePress site"
+          git push -f origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
