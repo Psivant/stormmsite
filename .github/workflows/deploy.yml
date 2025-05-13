@@ -24,20 +24,20 @@ jobs:
       - name: Build VuePress site
         run: npm run docs:build
 
-      - name: Deploy to GitHub Pages
+            - name: Deploy to GitHub Pages
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          # Clone the repository and checkout or create gh-pages branch
-          git clone --depth=1 --branch=gh-pages https://github.com/${{ github.repository }} gh-pages || git clone --depth=1 https://github.com/${{ github.repository }} gh-pages
+          # Clone gh-pages branch (if it exists) or create it
+          git clone --depth=1 --single-branch --branch gh-pages https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages || git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages
           cd gh-pages
           git checkout gh-pages || git checkout --orphan gh-pages
 
-          # Remove all existing files
+          # Remove all old files
           rm -rf *
 
-          # Copy new build from VuePress output
+          # Copy new site build
           cp -r ../docs/.vuepress/dist/* .
 
           # Commit and push
