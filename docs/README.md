@@ -4,7 +4,7 @@ title: Home
 heroImage: 
 actions:
   - text: Get Started
-    link: /get-started.html
+    link: ./get-started.html
     type: primary
 
   - text: OSS Repository
@@ -17,7 +17,7 @@ xfeatures:
              of analysis in a code base built to accelerate GPU computing.  Unlike other packages
              that focus on one molecular system at a time, STORMM combines any number of systems
              into one calculation for superior scaling as well as programming advantages.
-    link: /why-stormm.html
+    link: ./why-stormm.html
 
   - title: Why Open Source?
     details: Psivant Therapeutics releases STORMM as free and open-source software to bring
@@ -34,11 +34,12 @@ xfeatures:
   - title: Industry-Leading Molecular Dynamics
     details: Unique algorithms and groudbreaking data structures come together for exceptional
              speed and versatility in a modular dynamics engine that also accelerates innovation.
+    link: ./stormm-md.html
 
   - title: Advanced Ligand Screening
     details: STORMM's batching is unmatched even for small molecule simulations, staging tens of
-             thousands of energy calculations in free space or in the context of a biomolecular
-             target.
+             thousands of energy calculations in free space or hundreds in the context of a
+             biomolecular target.
 
   - title: At Home in a Python Ecosystem
     details: All coordinate and topology objects can be exported or imported from analogs in
@@ -57,7 +58,7 @@ xfeatures:
              are described in a manner that links back to the high-level documentation on this
              website.  Any further questions can be put to the principal developers.
     
-footer: Copyright 2023-2024 | Psivant Therapeutics | MIT Licensed
+footer: Copyright 2023-2025 | Psivant Therapeutics | MIT Licensed
 ---
 <!-- 
 This is the content of home page. Check [Home Page Docs][default-theme-home] for more details.

@@ -1,7 +1,11 @@
 # Getting Started with STORMM
 
 ## Introduction
-The STORMM code base provides accessible, performant, and interoperable libraries for a new family of molecular dynamics (MD) programs. It offers basic operations such as coordinate and topology intake, user input parsing, and energy evaluations, managed through a common set of C++ classes and CUDA or HIP kernels. The codebase is optimized for both CPU and GPU environments, aiming to balance performance and accessibility.
+The STORMM code base provides accessible, performant, and interoperable libraries for a new family
+of molecular dynamics (MD) programs. It offers basic operations such as coordinate and topology
+intake, user input parsing, and energy evaluations, managed through a common set of C++ classes and
+CUDA or HIP kernels. The codebase is optimized for both CPU and GPU environments, aiming to balance
+performance and accessibility.
 
 ## Installation Instructions
 
