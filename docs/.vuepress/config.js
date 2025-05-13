@@ -15,4 +15,5 @@ export default defineUserConfig({
   }),
 
   bundler: viteBundler(),
+  base: "/stormmsite/",
 })
