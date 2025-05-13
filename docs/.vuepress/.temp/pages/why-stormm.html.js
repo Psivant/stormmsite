@@ -1,0 +1,16 @@
+import comp from "/Users/kushagra.srivastava/Documents/StormmSite/docs/.vuepress/.temp/pages/why-stormm.html.vue"
+const data = JSON.parse("{\"path\":\"/why-stormm.html\",\"title\":\"Why choose STORMM?\",\"lang\":\"en-US\",\"frontmatter\":{},\"headers\":[{\"level\":2,\"title\":\"A New Molecular Dynamics Package\",\"slug\":\"a-new-molecular-dynamics-package\",\"link\":\"#a-new-molecular-dynamics-package\",\"children\":[]},{\"level\":2,\"title\":\"A Workbench for Implementing Molecular Models\",\"slug\":\"a-workbench-for-implementing-molecular-models\",\"link\":\"#a-workbench-for-implementing-molecular-models\",\"children\":[]},{\"level\":2,\"title\":\"\",\"slug\":\"\",\"link\":\"#\",\"children\":[]}],\"git\":{\"updatedTime\":1730406269000,\"contributors\":[{\"name\":\"DaveCerutti\",\"email\":\"david.cerutti@roivant.com\",\"commits\":1}]},\"filePathRelative\":\"why-stormm.md\"}")
+export { comp, data }
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}
