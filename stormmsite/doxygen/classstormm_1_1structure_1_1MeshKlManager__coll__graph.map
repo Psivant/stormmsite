@@ -1,0 +1,7 @@
+<map id="stormm::structure::MeshKlManager" name="stormm::structure::MeshKlManager">
+<area shape="rect" id="Node000001" title="Collect and dispense the launch parameters for various mesh&#45;based kernels. The launches for these ker..." alt="" coords="36,169,168,210"/>
+<area shape="rect" id="Node000002" href="$classstormm_1_1card_1_1KernelManager.html" title="Parent class for other kernel managers, incorporating the common dictionary of kernel keys and GPU de..." alt="" coords="5,94,199,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,135,105,169,99,169,99,135"/>
+<area shape="rect" id="Node000003" href="$classstormm_1_1card_1_1GpuDetails.html" title="Pertinent aspects of one particular GPU. Condensing the data for each GPU in this manner helps to ens..." alt="" coords="16,5,188,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,47,105,94,99,94,99,47"/>
+</map>

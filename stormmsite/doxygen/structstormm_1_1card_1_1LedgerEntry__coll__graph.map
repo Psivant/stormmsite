@@ -1,0 +1,5 @@
+<map id="stormm::card::LedgerEntry" name="stormm::card::LedgerEntry">
+<area shape="rect" id="Node000001" title="Entries of the memory ledger recording not just a copy of the immutable type data but also allocation..." alt="" coords="5,94,182,120"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1card_1_1HybridLabel.html" title="A Hybrid object&#39;s immutable identifying information, stored as a const member variable within the Hyb..." alt="" coords="6,5,181,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,47,96,94,91,94,91,47"/>
+</map>

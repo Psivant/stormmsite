@@ -1,0 +1,7 @@
+<map id="stormm::synthesis::SyRestraintKit&lt; T, T2, T4 &gt;" name="stormm::synthesis::SyRestraintKit&lt; T, T2, T4 &gt;">
+<area shape="rect" id="Node000001" title="Collect the critical restraint parameters and masking information for work unit&#45;based evaluation of t..." alt="" coords="63,154,245,195"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1int2.html" title=" " alt="" coords="5,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,61,82,95,95,129,119,152,115,156,91,131,77,97,71,62"/>
+<area shape="rect" id="Node000003" href="$structstormm_1_1data__types_1_1uint2.html" title=" " alt="" coords="167,5,304,46"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,62,224,97,208,131,186,155,182,152,204,129,219,95,228,61"/>
+</map>

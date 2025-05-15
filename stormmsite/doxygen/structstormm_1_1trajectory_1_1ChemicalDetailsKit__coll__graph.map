@@ -1,0 +1,5 @@
+<map id="stormm::trajectory::ChemicalDetailsKit" name="stormm::trajectory::ChemicalDetailsKit">
+<area shape="rect" id="Node000001" title="Information on atoms and residues which may be useful for applying atom masks or identifying specific..." alt="" coords="5,139,147,180"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1char4.html" title=" " alt="" coords="7,5,145,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,62,79,139,73,139,73,62"/>
+</map>

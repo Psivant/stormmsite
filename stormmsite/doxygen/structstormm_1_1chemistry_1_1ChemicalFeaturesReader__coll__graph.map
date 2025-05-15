@@ -1,0 +1,7 @@
+<map id="stormm::chemistry::ChemicalFeaturesReader" name="stormm::chemistry::ChemicalFeaturesReader">
+<area shape="rect" id="Node000001" title="Abstract of the chemical features object: this is about as complex as an object with a single abstrac..." alt="" coords="84,109,253,150"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1int4.html" title=" " alt="" coords="5,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,55,152,107,149,110,100,59"/>
+<area shape="rect" id="Node000003" href="$classstormm_1_1topology_1_1AtomGraph.html" title="A struct to hold information relating to an Amber topology. This struct&#39;s member functions are limite..." alt="" coords="166,13,363,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,54,237,87,208,110,205,106,233,83,253,51"/>
+</map>

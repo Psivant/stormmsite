@@ -1,0 +1,5 @@
+<map id="stormm::topology::PairLJInteraction" name="stormm::topology::PairLJInteraction">
+<area shape="rect" id="Node000001" title="A struct to encode two atom types and the Lennard&#45;Jones parameters by which they interact." alt="" coords="5,124,234,150"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1char4.html" title=" " alt="" coords="51,5,188,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,62,122,124,117,124,117,62"/>
+</map>

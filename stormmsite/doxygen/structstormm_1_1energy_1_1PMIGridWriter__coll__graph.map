@@ -1,0 +1,5 @@
+<map id="stormm::energy::PMIGridWriter" name="stormm::energy::PMIGridWriter">
+<area shape="rect" id="Node000001" title="A writeable abstract for the Particle&#45;Mesh Interaction Grid class." alt="" coords="5,109,208,135"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1uint4.html" title=" " alt="" coords="38,5,175,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,61,109,109,104,109,104,61"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="stormm::stmath::CoreKlManager" name="stormm::stmath::CoreKlManager">
+<area shape="rect" id="Node000001" title="A class to guide the implementation of GPU kernels, with selected thread counts per block and block c..." alt="" coords="5,79,217,105"/>
+<area shape="rect" id="Node000002" href="$classstormm_1_1card_1_1KernelManager.html" title="Parent class for other kernel managers, incorporating the common dictionary of kernel keys and GPU de..." alt="" coords="14,5,208,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,46,114,79,108,79,108,46"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="stormm::Ecumenical2" name="stormm::Ecumenical2">
+<area shape="rect" id="Node000001" title="Mimic critical CUDA typecasting intrinsics with simple unions {." alt="" coords="80,109,228,135"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1char2.html" title=" " alt="" coords="5,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,56,146,107,142,111,98,60"/>
+<area shape="rect" id="Node000003" href="$structstormm_1_1data__types_1_1uchar2.html" title=" " alt="" coords="167,5,304,46"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,60,166,111,162,107,207,56"/>
+</map>

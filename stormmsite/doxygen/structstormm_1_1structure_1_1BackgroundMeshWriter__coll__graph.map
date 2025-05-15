@@ -1,0 +1,11 @@
+<map id="stormm::structure::BackgroundMeshWriter&lt; Tdata &gt;" name="stormm::structure::BackgroundMeshWriter&lt; Tdata &gt;">
+<area shape="rect" id="Node000001" title="The templated, writeable abstract of a BackgroundMesh object." alt="" coords="453,103,609,158"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1structure_1_1MeshParamKit.html" title="The abstract of a MeshParameters object is read&#45;only (modify the original to get a new abstract if th..." alt="" coords="237,45,369,86"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="384,86,453,106,452,111,383,91"/>
+<area shape="rect" id="Node000003" href="$structstormm_1_1data__types_1_1int95__t.html" title="A mixed tuple for 95&#45;bit integer accumulation. This is the proper way to take double&#45;precision floati..." alt="" coords="5,45,143,86"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="158,63,236,63,236,68,158,68"/>
+<area shape="rect" id="Node000004" href="$structstormm_1_1structure_1_1MeshRulerKit.html" title=" " alt="" coords="237,110,369,151"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="384,128,452,128,452,133,384,133"/>
+<area shape="rect" id="Node000005" href="$structstormm_1_1structure_1_1MeshBasicsKit.html" title="Abstract for the MeshFoundation object to encapsulate pointers to its data on the host or the device." alt="" coords="237,176,369,216"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="383,170,452,151,453,156,384,176"/>
+</map>

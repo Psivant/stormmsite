@@ -1,0 +1,5 @@
+<map id="stormm::topology::ScreeningFactorTag" name="stormm::topology::ScreeningFactorTag">
+<area shape="rect" id="Node000001" title="A struct to encode the non&#45;bonded atom types in a dihedral and associated electrostatic and van&#45;der W..." alt="" coords="5,154,194,195"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1char4.html" title=" " alt="" coords="31,5,168,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,61,102,153,97,153,97,61"/>
+</map>

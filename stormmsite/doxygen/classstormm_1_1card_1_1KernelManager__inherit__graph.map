@@ -1,0 +1,7 @@
+<map id="stormm::card::KernelManager" name="stormm::card::KernelManager">
+<area shape="rect" id="Node000001" title="Parent class for other kernel managers, incorporating the common dictionary of kernel keys and GPU de..." alt="" coords="118,5,311,31"/>
+<area shape="rect" id="Node000002" href="$classstormm_1_1card_1_1CoreKlManager.html" title="A class to guide the implementation of GPU kernels, with selected thread counts per block and block c..." alt="" coords="5,79,202,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,42,124,81,121,76,181,37"/>
+<area shape="rect" id="Node000003" href="$classstormm_1_1card_1_1MeshKlManager.html" title="Collect and dispense the launch parameters for various mesh&#45;based kernels. The launches for these ker..." alt="" coords="226,79,426,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="247,37,309,76,306,81,244,42"/>
+</map>
