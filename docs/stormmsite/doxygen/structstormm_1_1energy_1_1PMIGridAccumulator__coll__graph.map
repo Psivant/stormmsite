@@ -1,0 +1,5 @@
+<map id="stormm::energy::PMIGridAccumulator" name="stormm::energy::PMIGridAccumulator">
+<area shape="rect" id="Node000001" title="A writeable abstract which reinterprets some pointers to enable split fixed&#45;precision accumulation wi..." alt="" coords="5,109,247,135"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1uint4.html" title=" " alt="" coords="57,5,195,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,61,129,109,123,109,123,61"/>
+</map>

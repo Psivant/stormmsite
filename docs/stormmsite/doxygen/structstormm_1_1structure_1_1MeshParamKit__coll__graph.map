@@ -1,0 +1,5 @@
+<map id="stormm::structure::MeshParamKit" name="stormm::structure::MeshParamKit">
+<area shape="rect" id="Node000001" title="The abstract of a MeshParameters object is read&#45;only (modify the original to get a new abstract if th..." alt="" coords="8,154,140,195"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1int95__t.html" title="A mixed tuple for 95&#45;bit integer accumulation. This is the proper way to take double&#45;precision floati..." alt="" coords="5,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,61,77,153,71,153,71,61"/>
+</map>

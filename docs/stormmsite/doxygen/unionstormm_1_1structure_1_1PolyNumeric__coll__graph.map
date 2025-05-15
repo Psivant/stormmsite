@@ -1,0 +1,7 @@
+<map id="stormm::structure::PolyNumeric" name="stormm::structure::PolyNumeric">
+<area shape="rect" id="Node000001" title="Union for storing numbers or other 4&#45;8 byte pieces of information." alt="" coords="88,109,220,150"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1float2.html" title=" " alt="" coords="5,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,57,141,107,137,110,97,60"/>
+<area shape="rect" id="Node000003" href="$structstormm_1_1data__types_1_1char4.html" title=" " alt="" coords="167,5,304,46"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,60,172,110,168,107,208,57"/>
+</map>

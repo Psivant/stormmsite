@@ -1,0 +1,5 @@
+<map id="stormm::card::KernelManager" name="stormm::card::KernelManager">
+<area shape="rect" id="Node000001" title="Parent class for other kernel managers, incorporating the common dictionary of kernel keys and GPU de..." alt="" coords="5,94,199,120"/>
+<area shape="rect" id="Node000002" href="$classstormm_1_1card_1_1GpuDetails.html" title="Pertinent aspects of one particular GPU. Condensing the data for each GPU in this manner helps to ens..." alt="" coords="16,5,188,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,47,105,94,99,94,99,47"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="stormm::mm::ThermostatReader&lt; T &gt;" name="stormm::mm::ThermostatReader&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Read&#45;only abstract for the Thermostat object." alt="" coords="32,124,276,150"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1int4.html" title=" " alt="" coords="5,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,59,109,98,136,122,132,126,105,102,83,62"/>
+<area shape="rect" id="Node000003" href="$structstormm_1_1data__types_1_1ulonglong2.html" title=" " alt="" coords="167,5,304,46"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,62,220,82,208,102,179,126,176,121,204,98,215,80,224,60"/>
+</map>

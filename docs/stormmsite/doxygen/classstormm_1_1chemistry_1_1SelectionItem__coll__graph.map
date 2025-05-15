@@ -1,0 +1,5 @@
+<map id="stormm::chemistry::SelectionItem" name="stormm::chemistry::SelectionItem">
+<area shape="rect" id="Node000001" title="The quantum of an atom mask: a specific name, or a numerical range, of atoms or residues...." alt="" coords="5,109,144,150"/>
+<area shape="rect" id="Node000002" href="$structstormm_1_1data__types_1_1char4.html" title=" " alt="" coords="6,5,143,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,62,77,109,72,109,72,62"/>
+</map>
