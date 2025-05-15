@@ -1,6 +1,10 @@
 <template><div><h1 id="getting-started-with-stormm" tabindex="-1"><a class="header-anchor" href="#getting-started-with-stormm"><span>Getting Started with STORMM</span></a></h1>
 <h2 id="introduction" tabindex="-1"><a class="header-anchor" href="#introduction"><span>Introduction</span></a></h2>
-<p>The STORMM code base provides accessible, performant, and interoperable libraries for a new family of molecular dynamics (MD) programs. It offers basic operations such as coordinate and topology intake, user input parsing, and energy evaluations, managed through a common set of C++ classes and CUDA or HIP kernels. The codebase is optimized for both CPU and GPU environments, aiming to balance performance and accessibility.</p>
+<p>The STORMM code base provides accessible, performant, and interoperable libraries for a new family
+of molecular dynamics (MD) programs. It offers basic operations such as coordinate and topology
+intake, user input parsing, and energy evaluations, managed through a common set of C++ classes and
+CUDA or HIP kernels. The codebase is optimized for both CPU and GPU environments, aiming to balance
+performance and accessibility.</p>
 <h2 id="installation-instructions" tabindex="-1"><a class="header-anchor" href="#installation-instructions"><span>Installation Instructions</span></a></h2>
 <h3 id="prerequisites" tabindex="-1"><a class="header-anchor" href="#prerequisites"><span>Prerequisites</span></a></h3>
 <ul>

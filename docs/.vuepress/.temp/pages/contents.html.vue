@@ -1,39 +1,26 @@
 <template><div><h1 id="table-of-contents" tabindex="-1"><a class="header-anchor" href="#table-of-contents"><span>Table of Contents</span></a></h1>
 <ol>
 <li>
-<p><a href="/why-stormm">Introduction</a></p>
+<p><a href="#introduction">Introduction</a></p>
 <ul>
 <li>Overview of the project's purpose and scope.</li>
 </ul>
 </li>
 <li>
-<p><a href="/get-started">Installation Instructions</a></p>
+<p><a href="#installation-instructions">Installation Instructions</a></p>
 <ul>
 <li>Steps to install and configure the project.</li>
-<li><a href="/get-started#installation-instructions">Prerequisites</a>
+<li><a href="#prerequisites">Prerequisites</a>
 <ul>
 <li>Software and tools required before installation.</li>
 </ul>
 </li>
-<li><a href="#installation-steps#installaion-instructions">Installation Steps</a>
+<li><a href="#installation-steps">Installation Steps</a>
 <ul>
 <li>Detailed steps for setting up the project.</li>
 </ul>
 </li>
-<li><a href="/installation/docker">Docker</a>
-<ul>
-<li>Steps to use one of the included Dockerfiles to spin up a containerized version of STORMM</li>
 </ul>
-</li>
-<li><a href="#GCP">GCP: Psivant</a>
-<ul>
-<li>Pulling one of the premade STORMM Containers on GCP</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><a href="#extern">External Package Support</a></p>
 </li>
 <li>
 <p><a href="#code-standards">Code Standards</a></p>
@@ -108,8 +95,6 @@
 </li>
 <li>
 <p><a href="#template-conventions">Template Conventions</a></p>
-</li>
-</ol>
 <ul>
 <li>Guidelines for using templates in the code.</li>
 <li><a href="#template-specialization">Template Specialization</a>
@@ -123,8 +108,9 @@
 </ul>
 </li>
 </ul>
-<ol start="11">
-<li><a href="#references">References</a>
+</li>
+<li>
+<p><a href="#references">References</a></p>
 <ul>
 <li>List of external resources, documentation, and additional reading materials.</li>
 </ul>
