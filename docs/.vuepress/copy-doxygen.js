@@ -5,9 +5,9 @@ import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Source and destination paths
-const sourceDir = path.join(__dirname, '..', 'stormmsite','doxygen')
-const distDir = path.join(__dirname, 'dist', 'stormmsite', 'doxygen')
-const devDir = path.join(__dirname, '.temp', 'public', 'stormmsite', 'doxygen')
+const sourceDir = path.join(__dirname, '..', 'doxygen')
+const distDir = path.join(__dirname, 'dist', 'doxygen')
+const devDir = path.join(__dirname, '.temp', 'public', 'doxygen')
 
 // Function to copy files
 function copyFiles(src, dest) {
