@@ -11,6 +11,10 @@ actions:
     link: https://github.com/psivant/stormm
     type: secondary
 
+  - text: Introductory Publication
+    link: https://pubs.aip.org/aip/jcp/article/161/3/032501/3303330/STORMM-Structure-and-topology-replica-molecular
+    type: secondary
+
 xfeatures:
   - title: Why Choose STORMM?
     details: STORMM is a unique molecular mechanics package that offers dynamics and other types
@@ -58,6 +62,7 @@ xfeatures:
     details: Delve into the code, function by function and class by class.  All methods and inputs
              are described in a manner that links back to the high-level documentation on this
              website.  Any further questions can be put to the principal developers.
+    link: ./doxygen/index.html
     
 footer: Copyright 2023-2025 | Psivant Therapeutics | MIT Licensed
 ---
