@@ -34,8 +34,9 @@ xfeatures:
              bewildering programmers familiar with C, building a class and API structure that makes
              it easy to find where the intense math happens to translate equations into molecular
              structures.  The developers of STORMM strive for a clean and accessible tool kit.
+    link: ./dev-philosophy.md
     
-  - title: Industry-Leading Molecular Dynamics
+  - title: A Radical New Approach to Molecular Dynamics
     details: Unique algorithms and groudbreaking data structures come together for exceptional
              speed and versatility in a modular dynamics engine that also accelerates innovation.
     link: ./stormm-md

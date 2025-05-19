@@ -1,0 +1,41 @@
+&files
+  -sys { -p ${STORMM_SOURCE}/test/Topology/trpcage.top
+         -c ${STORMM_SOURCE}/test/Trajectory/trpcage.inpcrd
+         -label TrpCage -n 3 }
+  -sys { -p ${STORMM_SOURCE}/test/Topology/dhfr_cmap.top
+         -c ${STORMM_SOURCE}/test/Trajectory/dhfr_cmap.inpcrd
+         -label DHFR -n 1 }
+  -sys { -p ${STORMM_SOURCE}/test/Topology/drug_example_iso.top
+         -c ${STORMM_SOURCE}/test/Trajectory/drug_example_iso.inpcrd
+         -label Drug -n 3 }
+  -o dyna.m
+&end
+
+&minimize
+  cdcyc 20,  ncyc 40,  maxcyc 60,
+  ntpr 1,
+&end
+
+&dynamics
+  nstlim = 200000,  ntpr = 500,  ntwx = 0, dt = 1.0,
+  ntt = 3,
+  rigid_geom on,
+  temperature = { tempi 100.0, temp0 300.0, -label TrpCage },
+  temperature = { tempi 100.0, temp0 400.0, -label DHFR },
+  temperature = { tempi 300.0, temp0 200.0, -label Drug },
+  tevo_start = 25000, tevo_end = 75000,
+  tcache_depth 1,
+&end
+
+&solvent
+  igb = 5,
+&end
+
+&report
+  syntax = Matlab,
+  energy bond,
+  energy angle,
+  energy dihedral,
+  energy total,
+  state	temperature,
+&end
