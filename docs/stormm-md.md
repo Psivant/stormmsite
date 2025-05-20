@@ -173,4 +173,3 @@ Some notes:
   column.
 * The first column of each table provides the step number at which the energy quantity was measured
   for any given system.
-  
