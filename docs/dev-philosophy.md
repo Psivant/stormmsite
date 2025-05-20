@@ -27,26 +27,36 @@ instructions when propagating the same simulation.
 
 In the modern computing environment, connecting scientists to the numbers in their calculations
 also means providing a transparent and simple way to transfer that information to the GPU to
-support GPU kernels (functions) which carry out the algorithm of interest.  GPU programming is
+support kernels (functions) which carry out the algorithm of interest.  GPU programming is
 difficult due to the nature of finding errors among thousands of threads accessing a single block
-of memory.  STORMM solves these problems with the style and standards of its C++ classes, letting
-them produce abstracts of pointers and critical array sizes which can be submitted to GPU kernels
-with much the same appearance as a function call in a C program.  Furthermore, all C++ classes are
-built on a built-in dynamic memory format which manages allocations on both the GPU device and CPU
-host, as well as transfers between them.  The C++ layer provides a means of organizing data and
-testing its veracity with minimal obfuscation as might be encountered in something like a Python
-program.  The class abstract convention in STORMM ensures that the algorithms and ideas carry over
-to the GPU.
+of memory, designing the information layout so that cache overturn and memory traffic
+remain at the lowest possible levels, and managing all of the pointers that the kernels need in
+order to access relevant data.  STORMM solves these problems with the style and standards of
+its C++ classes, letting them produce abstracts of pointers and critical array sizes which can be
+submitted to GPU kernels with much the same appearance as a function call in a C program.
+Furthermore, all C++ classes are built on a built-in dynamic memory format which manages
+allocations on both the GPU device and CPU host, as well as transfers between them.  The C++ layer
+provides a means of organizing data and testing its veracity with minimal obfuscation as might be
+encountered in something like a Python program.  The class abstract convention in STORMM ensures
+that the algorithms and ideas carry over to the GPU.
 
 ## Keep Dependencies Minimal
 STORMM's compilation is fast and robust due to careful construction of the CMake scripts and a low
 dependence on external software packages.  For compatibility, STORMM compiles with NetCDF, and for
-speed in CPU computations as well as verstaility in a fundamental mathematical operation STORMM
+speed in CPU computations as well as versatility in a fundamental mathematical operation STORMM
 compiles with PocketFFT.  Otherwise, rather than bring in
 [NVIDIA's CUDA Thrust](https://developer.nvidia.com/thrust) or
 [AMD's RocThrust](https://github.com/ROCm/rocThrust), STORMM uses its own
 [`Hybrid<T>`](./doxygen/hybrid_8h_source.html) dynamic memory class to manage corresponding data on
-the CPU host and the GPU device.
+the CPU host and the GPU device.  Features of the `Hybrid<T>` class are entwined with exception
+handling to expedite backtracing.  Another built-in dependency bypass is the unit testing library,
+including the [`TestEnvironment`](./doxygen/classstormm_1_1testing_1_1TestEnvironment.html) class
+which rolls together customizable command line input with runtime success and failure tallies as
+well as test summary output.  The testing functions replicate the essential features of popular
+unit testing packages with specializations for the sorts of computations common to computational
+chemistry.  Having all of these features rolled into a single code base also presents developers
+with a unified resource, the [STORMM doxygen documentation](./doxygen/index.html), to delve through
+when looking for particular methods and data structures.
 
 ## C++ to C, and then to CUDA
 STORMM is built to run [NVIDIA's CUDA](https://developer.nvidia.com/cuda-toolkit) for the time
