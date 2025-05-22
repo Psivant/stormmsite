@@ -123,16 +123,24 @@ coordinate synthesis, the
 arrangement, and the contrast between a synthesis and an array of objects, is illustrated in the
 following diagram:
 
-![Synthesis Distinction](./assets/synth_layout.png)
+<img src="./assets/synth_layout.png" alt="Synthesis Distinction" style="width:60%">
 
 Above, a series of molecular coordinate objects is first arranged in a traditional array.  It could
 be a `std::vector<Coordinates>`, but this would be cumbersome to port data to and from the GPU for
 reasons already mentioned.  The essential elements are the allocated data for the array elements,
-the sub-allocations for atomic positions within each coordinate object, and the number of molecular
-systems in the array.  In contrast, the synthesis of such systems arranges all Cartesian *x*, *y*,
-and *z* coordinates into their own arrays, and might store an additional array of tuples containing
-the first and final array elements at which to find the positions of atoms in each system.  The
-number of systems *K*, dictating the length of the bounds array, is likewise stored.  While the
-above example reduces the number of pointers three-fold, in principle any number of systems'
-coordinates can be stored in a synthesis of the same format, whereas the array of coordinate
-objects continues to required 3*K* + 1 pointers.
+the sub-allocations for atomic positions and the number of atoms within each coordinate object, and
+the number of molecular systems in the array.  In contrast, the synthesis of such systems arranges
+all Cartesian *x*, *y*, and *z* coordinates into their own arrays, and might store an additional
+array of tuples containing the first and final array elements at which to find the positions of
+atoms in each system.  The number of systems *K*, dictating the length of the bounds array, is
+likewise stored.  While the above example reduces the number of pointers three-fold, in principle
+any number of systems' coordinates can be stored in a synthesis of the same format, whereas the
+array of coordinate objects continues to require 3*K* + 1 pointers.
+
+The purpose of a synthesis is to establish a framework for the GPU thread blocks to stride down
+contiguous arrays of data in order to perfomr the same calculation on every system in the series.
+The individual steps taken by the GPU are also planned by the CPU, often assembled into arrays of
+their own class objects, as described in the final section.
+
+## Work Units: The CPU Delegates to a GPU Vector Engine
+In order for 
