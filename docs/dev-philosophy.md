@@ -19,11 +19,11 @@ simulation.
 For more than a decade, computational science has been transformed by vectorized, general-purpose
 graphics processors (GPUs).  The degree of efficiency afforded by this end point of non-uniform
 memory access computing is staggering: a single consumer-grade card running on a few hundred watts
-can perform more calculations than supercomputers of the past, based on single-core or multicore
-processors.  The cards also deliver a much greater degree of parallel scaling: a supercomputer in
-2005 might have delieverd as little as 5-10% efficiency on a parallel simulation sprawling over
-hundreds of processors.  A GPU in 2025 may utilize upwards of 50% of its available floating point
-instructions when propagating the same simulation.
+can perform more calculations than megawatt supercomputers of the past built around single-core or
+multicore processors.  The cards also deliver a much greater degree of parallel scaling: a
+supercomputer in 2005 might have delieverd as little as 5-10% efficiency on a parallel simulation
+sprawling over hundreds of processors.  A GPU in 2025 may utilize upwards of 50% of its available
+floating point instructions when propagating the same simulation.
 
 In the modern computing environment, connecting scientists to the numbers in their calculations
 also means providing a transparent and simple way to transfer that information to the GPU to
@@ -42,10 +42,10 @@ that the algorithms and ideas carry over to the GPU.
 
 ## Keep Dependencies Minimal
 STORMM's compilation is fast and robust due to careful construction of the CMake scripts and a low
-dependence on external software packages.  For compatibility, STORMM compiles with NetCDF, and for
-speed in CPU computations as well as versatility in a fundamental mathematical operation STORMM
-compiles with PocketFFT.  Otherwise, rather than bring in
-[NVIDIA's CUDA Thrust](https://developer.nvidia.com/thrust) or
+dependence on external software packages.  Planning for compatibility in trajectories that it will
+write and other data it might store, STORMM compiles with NetCDF.  For speed in CPU computations as
+well as versatility in a fundamental mathematical operation STORMM compiles with PocketFFT.
+Otherwise, rather than bring in [NVIDIA's CUDA Thrust](https://developer.nvidia.com/thrust) or
 [AMD's RocThrust](https://github.com/ROCm/rocThrust), STORMM uses its own
 [`Hybrid<T>`](./doxygen/hybrid_8h_source.html) dynamic memory class to manage corresponding data on
 the CPU host and the GPU device.  Features of the `Hybrid<T>` class are entwined with exception
@@ -69,7 +69,7 @@ opposed to the C++ Standard Template Library
 system), a class method is written to return a `struct` containing critical array size constants
 and pointers to the relevant memory.  If the `class` contained `std::vector<T>` arrays for its
 memory, a set of pointers to each array's `.data()` member variable and constants for its `.size()`
-would, in effect, allow the developer to traverse the `class` object's data s if it were a C
+would, in effect, allow the developer to traverse the `class` object's data as if it were a C
 `struct` object.  In STORMM, there is an additional choice to make: while the size of any given
 array will be the same on the CPU or on the GPU, the pointers can refer to data on the CPU host or
 on the GPU device.  The developer can still traverse the host-side data as if it were a C `struct`,
@@ -78,29 +78,29 @@ but also take the abstract with pointers to memory on the device and traverse it
 ![ClassAbstracting](./assets/class_abs.png)
 
 In the above diagram, a hypothetical STORMM class contains five `Hybrid` arrays in two different
-data types, e.g. `int` and `double`.  It also contains a pointer to another object, of the STORMM
+data types, e.g. `int` and `double`.  It also contains a pointer to another object of the STORMM
 topology type (this is called [`AtomGraph`](./doxygen/classstormm_1_1topology_1_1AtomGraph.html)
-in the code, but that detail is irrelevant here).  The pointer to the STORMM topology, which may be
-stored in the object as a way to trace the original inputs used to create / calculate its contents,
-is only valid for the CPU, and therefore doesn't become part of the abstract.  Each of the `Hybrid`
-arrays, however, hold valid pointers to data on the CPU host as well as on the GPU device, so the
-abstract is created based on a choice of whether pointers should be directed towwards data on
-either resource to facilitate computations there.  The `StormmClass` also contains a tuple of three
-extra parameters, i.e. three `double` values, which are included in the abstract as constants.  The
-abstract is a key to the data in the `class`--if the values of the tuple are changing over time,
-the convention in most STORMM classes is to have the abstract be a snapshot of the class at any
-given time, with `const` qualifiers on such values to treat them as constants.
+in the code, but that detail is irrelevant here), as a way to trace the original inputs used to
+create / calculate its contents.  This pointer is only valid for the CPU, and therefore doesn't
+become part of the abstract.  Each of the `Hybrid` arrays, however, hold valid pointers to data on
+the CPU host as well as on the GPU device, so the abstract is created based on a choice of whether
+pointers should be directed towards data on either resource to facilitate computations there.  The
+`StormmClass` also contains a tuple of three extra parameters, i.e. three `double` values, which
+are included in the abstract as constants.  The abstract is a key to the data in the `class`--if
+the values of the tuple are changing over time, the convention in most STORMM classes is to have
+the abstract be a snapshot of the class at any given time, with `const` qualifiers on such values
+to treat them as constants.
 
 ## Syntheses: Not Just Arrays of Topologies or Coordinate Sets
 It's easy to think that the way to stage multiple problems on the GPU is to create arrays of the
 basic [AtomGraph](./doxygen/classstormm_1_1topology_1_1AtomGraph.html) topology or
 [PhaseSpace](./doxygen/classstormm_1_1trajectory_1_1PhaseSpace.html) coordinate and force-holding
-objects.  However, this is bad for two reasons: first, for engineering reasons, the `Hybrid<T>`
+objects.  However, this is bad for two reasons: first, for engineering safety, the `Hybrid<T>`
 data type is restricted to various elemental data types, e.g. `double`, `char`, or `unsigned int`.
 It cannot be used to create an array of topologies or coordinate objects, and even if it was then
-there would be host- and device-level pointers to the host- and device-level elements of the list
-of topology and coordinate objects, which would only be valid if accessed in particular ways.  A
-more mundane form of pointer acrobatics gives rise to the second, performance-centric reason: a
+there would be host- and device-level pointers to the host- and device-level elements of each
+topology or coordinate set in the list, which would only be valid if accessed in particular ways.
+A more mundane form of pointer acrobatics gives rise to the second, performance-centric reason: a
 list of objects with their own sub-arrays would require threads in a GPU kernel to de-reference the
 list pointer and then the array pointers of the underlying objects.  A list of abstracts would do
 no better.  It's a cost to de-reference a pointer, which is why optimized codes like to get into an
@@ -108,8 +108,8 @@ array and then go straight down all of its elements to utilize all of the vector
 can muster.  In C++ code, it's easy enough to store a temporary pointer to the location of interest
 and cut through a series of pointers in that manner, but *storing* a temporary pointer exacts a
 cost in registers which are in short supply on the GPU (this, more than cache rationing, is perhaps
-the most significant resource in GPU program optimization for scientific computing).  The GPU needs
-to have as few arrays a possible, and a means of striding through them form start to finish.
+the most significant distinction in GPU program optimization).  The GPU should be directed to as
+few arrays as possible, and a always given means of striding through them from start to finish.
 
 A *synthesis* of topologies or coordinates is therefore a new class which has similar numbers of
 member variables to the corresponding classes for a single system, but collates all systems' data
@@ -119,4 +119,8 @@ cache line.  The synthesis of topologies,
 [`AtomGraphSynthesis`](./doxygen/classstormm_1_1synthesis_1_1AtomGraphSynthesis.html), stores a
 series of integer markers to indicate where each system's details start and stop, as does the
 coordinate synthesis, the
-[`PhaseSpaceSynthesis`](./doxygen/classstormm_1_1synthesis_1_1PhaseSpaceSynthesis.html).
+[`PhaseSpaceSynthesis`](./doxygen/classstormm_1_1synthesis_1_1PhaseSpaceSynthesis.html).  The
+arrangement, and the contrast between a synthesis and an array of objects, is illustrated in the
+following diagram:
+
+![Synthesis Distinction](./assets/synth_layout.png)

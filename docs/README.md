@@ -27,14 +27,14 @@ xfeatures:
     details: Psivant Therapeutics releases STORMM as free and open-source software to bring
              together a community and advance molecular science.  Marketing the softare does not
              hold as much value as running an active development project that can invite
-             collaborations with academics or other experts basd on  mutual goals.
+             collaborations with academics or other experts based on mutual goals.
 
   - title: Development Philosophy
     details: A programming style that harnesses the most practical improvements in C++ without
              bewildering programmers familiar with C, building a class and API structure that makes
              it easy to find where the intense math happens to translate equations into molecular
              structures.  The developers of STORMM strive for a clean and accessible tool kit.
-    link: ./dev-philosophy.md
+    link: ./dev-philosophy
     
   - title: A Radical New Approach to Molecular Dynamics
     details: Unique algorithms and groudbreaking data structures come together for exceptional
