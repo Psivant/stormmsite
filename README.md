@@ -4,8 +4,6 @@ The following repository holds the source code for the [STORMM](https://github.c
 
 Similar to STORMM, the code herein is also licensed under MIT, and we welcome all contributions from the Open Source community. Please note that direct contributions and access will not be granted. We encourage you to create your own forks, and submit any changes as Pull Requests using GitHub.
 
-Please refrain from making any changes to ```docs/.vuepress```, as it contains scripts and workflows to ensure the site works properly (alongside the CSS for styling purposes).
-
 ## Installation Instructions
 
 To get started with editing and suggesting changes to the STORMM website, first fork and clone the website on your local machine. Afterwards, we will need to install NVM, Node, and NPM to compile the website from Markdown pages to html.
@@ -27,14 +25,9 @@ Firstly, we need to install Node Version Manager:
     * Run the following command to download and install NVM:
 
         ```bash
-        curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh) | bash
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
         ```
         (Note: Check the NVM repository for the latest version and replace `v0.39.1` if necessary.)
-    * Alternatively, you can use `wget`:
-
-        ```bash
-        wget -qO- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh) | bash
-        ```
 
 2.  **Source NVM:**
     * After the installation script finishes, you need to source your shell's configuration file to make the `nvm` command available. The installation script usually adds the necessary lines to your `~/.bashrc`, `~/.zshrc`, or `~/.profile` file.
@@ -53,10 +46,10 @@ Firstly, we need to install Node Version Manager:
         ```bash
         nvm install --lts
         ```
-    * To install a specific version (e.g., 18.17.1):
+    * To install a specific version (e.g., 21 (which is a stable version for this website)):
 
         ```bash
-        nvm install 18.17.1
+        nvm install 21
         ```
 
 4.  **Set the Default Node.js Version (Optional):**
@@ -67,7 +60,7 @@ Firstly, we need to install Node Version Manager:
         nvm alias default <version>  # Replace <version> with the desired version (e.g., "lts", "18.17.1")
         ```
 
-5.  **Verify Installation:**
+5.  **Restart CLI and Verify Installation:**
 
     * Check that NVM is installed correctly:
 
@@ -132,3 +125,36 @@ For Windows, you'll need to use [NVM for Windows](https://github.com/coreybutler
         node -v
         npm -v
         ```
+
+## Website Install and Local Server
+
+* Once you have nvm and npm installed and working, please clone this repository:
+
+```bash
+git clone https://github.com/psivant/stormmsite
+```
+
+* ```cd``` into the repository, and install all the required packages:
+
+```bash
+$ cd stormmsite
+$ npm i
+```
+
+* Once the packages are installed, you can either run a local server to see the website on your computer as you make changes:
+
+```bash
+npm run docs:dev
+```
+
+OR
+
+* You can build the website output (HTML), which is stored in ```docs/.vuepress/dist```
+
+```bash
+npm run docs:build
+```
+
+The local server serves your changes live as you make edits to the markdown files in ```docs```, but does not host Doxygen generated pages as of now. A script, ```docs/.vuepress/copy-doxygen.js``` takes care of moving the Doxygen generated pages in the build output to host on GitHub Pages.
+
+Please refrain from making any changes to ```docs/.vuepress``` and to ```.github/workflows```, as it contains scripts and workflows to ensure the site works properly (alongside the CSS for styling purposes). All website-related config files and build outputs + logs reside in ```docs/.vuepress```.
