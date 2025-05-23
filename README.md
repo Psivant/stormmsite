@@ -4,6 +4,8 @@ The following repository holds the source code for the [STORMM](https://github.c
 
 Similar to STORMM, the code herein is also licensed under MIT, and we welcome all contributions from the Open Source community. Please note that direct contributions and access will not be granted. We encourage you to create your own forks, and submit any changes as Pull Requests using GitHub.
 
+Please refrain from making any changes to ```docs/.vuepress```, as it contains scripts and workflows to ensure the site works properly (alongside the CSS for styling purposes).
+
 ## Installation Instructions
 
 To get started with editing and suggesting changes to the STORMM website, first fork and clone the website on your local machine. Afterwards, we will need to install NVM, Node, and NPM to compile the website from Markdown pages to html.
