@@ -123,7 +123,7 @@ coordinate synthesis, the
 arrangement, and the contrast between a synthesis and an array of objects, is illustrated in the
 following diagram:
 
-<img src="./assets/synth_layout.png" alt="Synthesis Distinction" style="width:60%">
+<img src="./assets/synth_layout.png" alt="Synthesis Distinction" style="width:60% ; margin:auto">
 
 Above, a series of molecular coordinate objects is first arranged in a traditional array.  It could
 be a `std::vector<Coordinates>`, but this would be cumbersome to port data to and from the GPU for
@@ -143,4 +143,15 @@ The individual steps taken by the GPU are also planned by the CPU, often assembl
 their own class objects, as described in the final section.
 
 ## Work Units: The CPU Delegates to a GPU Vector Engine
-In order for 
+In order for the GPU to function efficiently on a heterogeneous set of problems, not just a stated
+number of replicas of a similar problem but a diverse set of simulations that could range in size
+from 500 to a million atoms, STORMM breaks down all problems into the smallest common element, the
+lowest common denominator.  In our
+[paper](https://pubs.aip.org/aip/jcp/article/161/3/032501/3303330/STORMM-Structure-and-topology-replica-molecular),
+these elements are termed *work units*.  One of the most intricate examples of work units in the
+code base, dicussed in the introductory publication, is the valence work unit, with several classes
+devoted to its construction.  Other work units may be tuples of even bit-packed arrays of
+`unsigned int`.  Work units are instructions to GPU kernels, detailing what information to access
+in order to perform the next iteration of the kernel's main loop, whether that is to evaluate a
+particular dihedral interaction between four adjacent atoms or all pairwise interactions among two
+lists of atoms subject to exclusions enumerated in an array beginning at a specified index.
