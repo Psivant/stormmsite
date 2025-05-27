@@ -11,10 +11,9 @@ script into that language.  It's not hard, however, and we hope that the journey
 those who take it with a greater appreciation for how Python and HPC computing work at a level
 closer to the "bare metal."
 
-## A Basic GPU Program in STORMM
+## [A Basic GPU Program in STORMM](./tutorials/tutorial_i)
 Before diving into the molecular mechanics capabilities, understand the means by which STORMM
 identifies an available GPU, manages memory on the CPU host and GPU device, and transfers data
 between the two resources.  For adept developer, the tutorial will also demonstrate the challenges
 of implementing templated GPU kernels in the context of a C++ program and some fundamental truths
 about GPU computing strategies.
-link: ./tutorials/tutorial_i.md
