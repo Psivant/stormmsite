@@ -1,160 +1,175 @@
 // === colors ===
 :root {
-    // Main accent color
-    --vp-c-accent: #007AC9; 
-    // Accent background color
-    --vp-c-accent-bg: #FDC82F; 
-    // Hover color for accents
-    --vp-c-accent-hover: #00A9E0; 
-    // Text color for accents
-    --vp-c-accent-text: var(--vp-c-white); 
-    // Soft accent color
-    --vp-c-accent-soft: rgba(0, 122, 201, 0.14); 
-  
-    // Default background color
-    --vp-c-bg: #fff; 
-    // Alternative background color
-    --vp-c-bg-alt: #F4587A; 
-    // Elevated background color
-    --vp-c-bg-elv: #FADD80; 
-  
-    // Default text color
-    --vp-c-text: rgb(60, 60, 67); 
-    // Muted text color
-    --vp-c-text-mute: rgb(60, 60, 67 / 78%); 
-    // Subtle text color
-    --vp-c-text-subtle: rgb(60, 60, 67 / 56%); 
-  
-    // Gutter color
-    --vp-c-gutter: #e2e2e3; 
-    // Default border color
-    --vp-c-border: #c2c2c4; 
-    // Strong border color
-    --vp-c-border-hard: #b8b8ba; 
-  
-    // Shadow color
-    --vp-c-shadow: rgb(0, 0, 0 / 15%); 
-  
-    // Control color
-    --vp-c-control: rgba(142, 150, 170, 0.1); 
-    // Hover control color
-    --vp-c-control-hover: rgba(142, 150, 170, 0.16); 
-    // Disabled control color
-    --vp-c-control-disabled: #eaeaea; 
-  
-    // Navbar background color
-    --vp-navbar-c-bg: var(--vp-c-bg); 
-    // Sidebar background color
-    --vp-sidebar-c-bg: var(--vp-c-bg); 
-  
-    // Code tab title color
-    --vp-c-code-tab-title: var(--code-c-text, rgb(255, 255, 255 / 90%)); 
-    // Code tab background
-    --vp-c-code-tab-bg: var(--code-bg-color, var(--code-c-bg)); 
-    // Active tab color
-    --vp-c-code-tab-active: var(--vp-c-accent); 
-  
-    // Tip badge text color
-    --badge-c-tip-text: var(--vp-c-green-text); 
-    // Tip badge background color
-    --badge-c-tip-bg: rgba(255, 87, 136, 0.1); 
-    // Warning badge text color
-    --badge-c-warning-text: var(--vp-c-yellow-text); 
-    // Warning badge background color
-    --badge-c-warning-bg: rgba(253, 200, 47, 0.1); 
-    // Danger badge text color
-    --badge-c-danger-text: var(--vp-c-red-text); 
-    // Danger badge background color
-    --badge-c-danger-bg: rgba(224, 0, 52, 0.1); 
-    // Important badge text color
-    --badge-c-important-text: var(--vp-c-purple-text); 
-    // Important badge background color
-    --badge-c-important-bg: rgba(156, 92, 181, 0.1); 
-    // Info badge text color
-    --badge-c-info-text: var(--vp-c-indigo-text); 
-    // Info badge background color
-    --badge-c-info-bg: rgba(0, 122, 201, 0.1); 
-    // Note badge text color
-    --badge-c-note-text: var(--vp-c-grey-text); 
-    // Note badge background color
-    --badge-c-note-bg: var(--vp-c-grey-soft); 
-  
-    // Default font
-    --font-family: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', roboto, oxygen, 
-      ubuntu, cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; 
-  
-    // Navbar height
-    --navbar-height: 3.6rem; 
-    // Navbar vertical padding
-    --navbar-padding-v: 0.7rem; 
-    // Navbar horizontal padding
-    --navbar-padding-h: 1.5rem; 
-    // Sidebar width
-    --sidebar-width: 20rem; 
-    // Mobile sidebar width
-    --sidebar-width-mobile: calc(var(--sidebar-width) * 0.82); 
-    // Main content width
-    --content-width: 740px; 
-    // Homepage width
-    --homepage-width: 960px; 
-  
-    // Header offset for positioning
-    --header-offset: var(--navbar-height); 
-  
-    // Color transition duration
-    --vp-t-color: 0.3s ease; 
-    // Transform transition duration
-    --vp-t-transform: 0.3s ease; 
-  
-    // SVG for external link
-    --external-link-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5H9z'/%3E%3C/svg%3E"); 
-    // Color for external link icon
-    --external-link-c-icon: var(--vp-c-text-mute); 
+  // Main accent color
+  --vp-c-accent: #007AC9;
+  // Accent background color
+  --vp-c-accent-bg: #FDC82F;
+  // Hover color for accents
+  --vp-c-accent-hover: #00A9E0;
+  // Text color for accents
+  --vp-c-accent-text: var(--vp-c-white);
+  // Soft accent color
+  --vp-c-accent-soft: rgba(0, 122, 201, 0.14);
+
+  // Default background color
+  --vp-c-bg: #fff;
+  // Alternative background color
+  --vp-c-bg-alt: #F4587A;
+  // Elevated background color
+  --vp-c-bg-elv: #FADD80;
+
+  // Default text color
+  --vp-c-text: rgb(60, 60, 67);
+  // Muted text color
+  --vp-c-text-mute: rgb(60, 60, 67 / 78%);
+  // Subtle text color
+  --vp-c-text-subtle: rgb(60, 60, 67 / 56%);
+
+  // Gutter color
+  --vp-c-gutter: #e2e2e3;
+  // Default border color
+  --vp-c-border: #c2c2c4;
+  // Strong border color
+  --vp-c-border-hard: #b8b8ba;
+
+  // Shadow color
+  --vp-c-shadow: rgb(0, 0, 0 / 15%);
+
+  // Control color
+  --vp-c-control: rgba(142, 150, 170, 0.1);
+  // Hover control color
+  --vp-c-control-hover: rgba(142, 150, 170, 0.16);
+  // Disabled control color
+  --vp-c-control-disabled: #eaeaea;
+
+  // Navbar background color
+  --vp-navbar-c-bg: var(--vp-c-bg);
+  // Sidebar background color
+  --vp-sidebar-c-bg: var(--vp-c-bg);
+
+  // --- Start of Code Block Text Color Fix for Light Mode ---
+  // This makes the text white. Be aware of low contrast on light backgrounds.
+  code {
+    color: white !important;
   }
-  
-  // -----------------------
-  // Dark Mode
-  // -----------------------
-  
-  [data-theme='dark'] {
-    // Main accent color for dark mode
-    --vp-c-accent: #FFF000; 
-    // Accent background for dark mode
-    --vp-c-accent-bg: #FFF000; 
-    // Hover accent color for dark mode
-    --vp-c-accent-hover: #FFF000; 
-    // Soft accent for dark mode
-    --vp-c-accent-soft: #FFF000; 
-  
-    // Default background for dark mode
-    --vp-c-bg: #1b1b1f; 
-    // Alternative background for dark mode
-    --vp-c-bg-alt: #FFF000; 
-    // Elevated background for dark mode
-    --vp-c-bg-elv: #202127; 
-  
-    // Default text for dark mode
-    --vp-c-text: rgb(235, 235, 245 / 86%); 
-    // Muted text for dark mode
-    --vp-c-text-mute: rgb(235, 235, 245 / 60%); 
-    // Subtle text for dark mode
-    --vp-c-text-subtle: rgb(235, 235, 245 / 38%); 
-  
-    // Gutter color for dark mode
-    --vp-c-gutter: #000; 
-    // Default border for dark mode
-    --vp-c-border: #3c3f44; 
-    // Strong border for dark mode
-    --vp-c-border-hard: #45484e; 
-  
-    // Shadow color for dark mode
-    --vp-c-shadow: rgb(0, 0, 0 / 30%); 
-  
-    // Control color for dark mode
-    --vp-c-control: rgb(101, 117, 133 / 12%); 
-    // Hover control for dark mode
-    --vp-c-control-hover: rgb(101, 117, 133 / 45%); 
-    // Disabled control for dark mode
-    --vp-c-control-disabled: #363636; 
+  pre code {
+    color: white !important;
   }
-  
+  div[class*="language-"] pre code {
+    color: white !important;
+  }
+  .token { /* Targets individual syntax highlighting tokens */
+    color: white !important;
+  }
+  // --- End of Code Block Text Color Fix for Light Mode ---
+
+  // Code tab title color
+  --vp-c-code-tab-title: var(--code-c-text, rgb(255, 255, 255 / 90%));
+  // Code tab background
+  --vp-c-code-tab-bg: var(--code-bg-color, var(--code-c-bg));
+  // Active tab color
+  --vp-c-code-tab-active: var(--vp-c-accent);
+
+  // Tip badge text color
+  --badge-c-tip-text: var(--vp-c-green-text);
+  // Tip badge background color
+  --badge-c-tip-bg: rgba(255, 87, 136, 0.1);
+  // Warning badge text color
+  --badge-c-warning-text: var(--vp-c-yellow-text);
+  // Warning badge background color
+  --badge-c-warning-bg: rgba(253, 200, 47, 0.1);
+  // Danger badge text color
+  --badge-c-danger-text: var(--vp-c-red-text);
+  // Danger badge background color
+  --badge-c-danger-bg: rgba(224, 0, 52, 0.1);
+  // Important badge text color
+  --badge-c-important-text: var(--vp-c-purple-text);
+  // Important badge background color
+  --badge-c-important-bg: rgba(156, 92, 181, 0.1);
+  // Info badge text color
+  --badge-c-info-text: var(--vp-c-indigo-text);
+  // Info badge background color
+  --badge-c-info-bg: rgba(0, 122, 201, 0.1);
+  // Note badge text color
+  --badge-c-note-text: var(--vp-c-grey-text);
+  // Note badge background color
+  --badge-c-note-bg: var(--vp-c-grey-soft);
+
+  // Default font
+  --font-family: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', roboto, oxygen,
+    ubuntu, cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  // Navbar height
+  --navbar-height: 3.6rem;
+  // Navbar vertical padding
+  --navbar-padding-v: 0.7rem;
+  // Navbar horizontal padding
+  --navbar-padding-h: 1.5rem;
+  // Sidebar width
+  --sidebar-width: 20rem;
+  // Mobile sidebar width
+  --sidebar-width-mobile: calc(var(--sidebar-width) * 0.82);
+  // Main content width
+  --content-width: 740px;
+  // Homepage width
+  --homepage-width: 960px;
+
+  // Header offset for positioning
+  --header-offset: var(--navbar-height);
+
+  // Color transition duration
+  --vp-t-color: 0.3s ease;
+  // Transform transition duration
+  --vp-t-transform: 0.3s ease;
+
+  // SVG for external link
+  --external-link-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5H9z'/%3E%3C/svg%3E");
+  // Color for external link icon
+  --external-link-c-icon: var(--vp-c-text-mute);
+}
+
+// -----------------------
+// Dark Mode
+// -----------------------
+
+[data-theme='dark'] {
+  // Main accent color for dark mode
+  --vp-c-accent: #FFF000;
+  // Accent background for dark mode
+  --vp-c-accent-bg: #FFF000;
+  // Hover accent color for dark mode
+  --vp-c-accent-hover: #FFF000;
+  // Soft accent for dark mode
+  --vp-c-accent-soft: #FFF000;
+
+  // Default background for dark mode
+  --vp-c-bg: #1b1b1f;
+  // Alternative background for dark mode
+  --vp-c-bg-alt: #FFF000;
+  // Elevated background for dark mode
+  --vp-c-bg-elv: #202127;
+
+  // Default text for dark mode
+  --vp-c-text: rgb(235, 235, 245 / 86%);
+  // Muted text for dark mode
+  --vp-c-text-mute: rgb(235, 235, 245 / 60%);
+  // Subtle text for dark mode
+  --vp-c-text-subtle: rgb(235, 235, 245 / 38%);
+
+  // Gutter color for dark mode
+  --vp-c-gutter: #000;
+  // Default border for dark mode
+  --vp-c-border: #3c3f44;
+  // Strong border for dark mode
+  --vp-c-border-hard: #45484e;
+
+  // Shadow color for dark mode
+  --vp-c-shadow: rgb(0, 0, 0 / 30%);
+
+  // Control color for dark mode
+  --vp-c-control: rgb(101, 117, 133 / 12%);
+  // Hover control for dark mode
+  --vp-c-control-hover: rgb(101, 117, 133 / 45%);
+  // Disabled control color
+  --vp-c-control-disabled: #363636;
+}
