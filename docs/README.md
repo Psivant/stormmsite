@@ -58,6 +58,7 @@ xfeatures:
     details: Study the high-level documentation to get your bearings in the vast, original code
              base.  Learn what the libraries have to offer, and what you would need to build your
              ideal molecular modeling application with STORMM compiled as a library.
+    link: ./dev-tutorials
 
   - title: Code Documentation (Doxygen)
     details: Delve into the code, function by function and class by class.  All methods and inputs
