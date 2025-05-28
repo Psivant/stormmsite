@@ -6,15 +6,17 @@ data from one resource to another, then launch kernels to process that data.  A 
 is the administrator for a series of workhorse GPU processes, and this is reflected in the C++ to
 CUDA transition that STORMM facilitates for NVIDIA hardware.
 
+## Overview
 It starts with one array.  Constants can be sent to the GPU as kernel launch parameters, but
-results from those kernel must, in general, be written to memory that the GPU can access (e.g. its
+results from those kernels must, in general, be written to memory that the GPU can access (e.g. its
 on-board memory, or
 [memory on the host allocated in such a way that the GPU can see it](https://developer.download.nvidia.com/compute/DevZone/docs/html/C/doc/html/group__CUDART__MEMORY_g15a3871f15f8c38f5b7190946845758c.html).  The contents of the array can then be downloaded by the CPU in the same way that the CPU
 can upload data to the device.  STORMM encapsulates memoory management through the templated
-`Hybrid` C++ class.
+[`Hybrid` C++ class](../doxygen/classstormm_1_1card_1_1Hybrid.html).
 
 The first step in writing the program is to recognize the GPU.  STORMM provides several classes to
-identify and select all available GPUs on the system.  They are the `GpuDetails` and `HpcConfig`,
+identify and select all available GPUs on the system.  They are the
+[`GpuDetails`](../doxygen/.html) and [`HpcConfig`](classstormm_1_1card_1_1HpcConfig.html) classes,
 available by including the following header files.  When STORMM is compiled for High Performance
 Computing (HPC) and the
 [NVIDIA Compute Unified Device Architecture (CUDA)](https://developer.nvidia.com/cuda-zone)
@@ -46,15 +48,17 @@ portion takes 0.099 seconds in a GPU-enabled code, but the CPU staging or post-p
 still takes one second, accounting for 90% of the wall time.  It can also be useful for users to
 see the wall time of various parts of their calculations, to optimize their own workflows or
 provide feedback to the developers.  For generating timings "in the wild", one cannot reply on a
-profiler, and therefore STORMM provides a dedicated class, the `StopWatch`, for timing different
-segments of a program.  Include:
+profiler, and therefore STORMM provides a dedicated class, the
+[`StopWatch`](classstormm_1_1testing_1_1StopWatch.html), for timing different segments of a
+program.  Include:
 ```
 #include "/stormm/home/src/UnitTesting/stopwatch.h"
 ```
 
-These capabilities, to find a GPU and to initialize a timings apparatus, can be laid out in the
-opening lines of the program.  Once the GPU is found, it is also helpful to do something such as
-allocate an array on the device, to trigger NVIDIA firmware and prepare the card for use by the
+## Allocating Fundamental Variables
+The critical capabilities, to find a GPU and to initialize a timings apparatus, can be laid out in
+the opening lines of the program.  Once the GPU is found, it is also helpful to do something such
+as allocate an array on the device, to trigger NVIDIA firmware and prepare the card for use by the
 program.
 ```
   StopWatch the_clock("STORMM Tutorial I");
@@ -78,32 +82,33 @@ program.
   printf("  Global cache size: %d bytes\n\n", gpu.getGlobalCacheSize());
 #endif
 ```
-The above code demonstrates how the `GpuDetails` class, is a standard C++ class with constructors
-and accessors.  It can be returned by methods in other classes or passed to functions that will
-manage GPU kernel launches.  Moreover, it is a wrapper for various structs in CUDA or, potentially,
-other HPC languages that capture specs of a card in the computer system.
+The above code demonstrates how the [`GpuDetails`](classstormm_1_1card_1_1GpuDetails.html) class,
+is a standard C++ class with constructors and accessors.  It can be returned by methods in other
+classes or passed to functions that will manage GPU kernel launches.  Moreover, it is a wrapper for
+various structs in CUDA or, potentially, other HPC languages that capture specs of a card in the
+computer system.
 
-The `StopWatch` class is intended to give developers simple and efficient methods to assign the
-time spent between any two wall time measurements to one of many customized, labeled bins.  The
-code above demonstrates assignment based on the name of the bin.  As implied by the variable
-`gpu_asgn_time` and `gpu_prep_time` variables, each category in the time tracking is given a
-unique integer value, which can also be used to immediately get the right bin rather than some
-search over name strings.
+The [`StopWatch`](classstormm_1_1testing_1_1StopWatch.html) class is intended to give developers
+simple and efficient methods to assign the time spent between any two wall time measurements to one
+of many customized, labeled bins.  The code above demonstrates assignment based on the name of the
+bin.  As implied by the variables `gpu_asgn_time` and `gpu_prep_time`, each category in the time
+tracking is given a unique integer value, which can also be used to index the right bin rather than
+a search over name strings.
 
 Aside from the tivial array which was allocated to force the GPU to engage, we can now create a
-more substantial array and manipulate its contents.  The `Hybrid` class will only accept template
-types of familiar, elemental types such as `int`, `double`, `char`, or `bool`.  It is not like the
-C++ Standard Template Library `std::vector`, which can be a container for arrays of custom
-classes and typically has optimized implementations for `std::vector<bool>`.  Some of the basic
-methods are similar, and for this STORMM uses "camel case" rather than underscore-separated
-methods, to help developers see when they are dealing with the STORMM dynamic memory class rather
-than the C++ standard.  The subscript array index operator `[]` is not overloaded in `Hybrid`
-objects at this time.  One feature of the `Hybrid` class is a developer-defined label that goes
-along with each array, which will be displayed if range-checked memory accesses fail to expedite
-backtracing.
+more substantial array and manipulate its contents.  The
+[`Hybrid`](classstormm_1_1card_1_1Hybrid.html) class will only accept template types of familiar,
+elemental types such as `int`, `double`, `char`, or `bool`.  It is not like the C++ Standard
+Template Library `std::vector`, which can be a container for arrays of custom classes and typically
+has optimized implementations for `std::vector<bool>`.  Some of the basic methods are similar, and
+for this STORMM uses "camel case" rather than underscore-separated methods, to help developers see
+when they are dealing with the STORMM dynamic memory class rather than the C++ standard.  The
+subscript array index operator `[]` is not overloaded in `Hybrid` objects at this time.  One
+feature of the `Hybrid` class is a developer-defined label that goes along with each array, which
+will be displayed if range-checked memory accesses fail to expedite backtracing.
 
-Let us allocate an array to hold a number sequence.  The sequence will start at some value and then
-ping-pong between two limits.
+Let us also allocate an array to hold a number sequence.  The sequence will start at some value and
+then ping-pong between two limits.
 ```
   // Create an array of integers on the CPU host and (if available) on the GPU device
   const int int_experiment_tm = the_clock.addCategory("Experiment with integers");
@@ -192,7 +197,7 @@ computed in a distnct data type, longer in format than the type of the array ele
 assume the same type for each in this example.  The C++ program cannot be told to `#include` any
 CUDA template implementations--the function within the **.cu** file will take an array and then
 delegate to some templated form of a CUDA kernel that only the CUDA unit knows about.  C++ doesn't
-know what a kernel, much less a template implementation for a kernel, really is.  However, the C++
+know what a CUDA kernel is, much less a template implementation for a kernel.  However, the C++
 program will `#include` the header describing the launching function, as illustrated in the
 following diagram:
 
@@ -269,19 +274,20 @@ result, we can use one of STORMM's built-in vector math functions:
 ```
 The summation is overloaded to accept a Hybrid object, a `std::vector<T>`, or a C-style array with
 a trusted length.  Many other vector-applicable functions work the same way.  For summations in
-particular, if a valid `GpuDetails` object is provided, the summation will run over the data
-present on the GPU device, with the option to have a temporary buffer array created just for that
-process (no need for manual allocation of `sum_of_xi` as we did above).  However, overloads of the
-`sum` function that accept GPU inputs are currently only callable from CUDA units.  Other overloads
-are callable from both C++ and CUDA code, as is seen above.  One other thing to note is that the
-`sum` function does take two formal template arguments, one for the data and another for the
-type to store the running sum--the data type is inferred from the input, while the type of the
-running sum is provided in the `sum<int>` call.
+particular, if a valid [`GpuDetails`](classstormm_1_1card_1_1GpuDetails.html) object is provided,
+the summation will run over the data present on the GPU device, with the option to have a temporary
+buffer array created just for that process (no need for manual allocation of `sum_of_xi` as we did
+above).  However, overloads of the `sum` function that accept GPU inputs are currently only
+callable from CUDA units.  Other overloads are callable from both C++ and CUDA code, as is seen
+above.  One other thing to note is that the `sum` function does take two formal template arguments,
+one for the data and another for the type to store the running sum--the data type is inferred from
+the input, while the type of the running sum is provided in the `sum<int>` call.
 
 ## The `StopWatch` for Tracking Wall Time
 As a final analysis, we can add lines to check the timing of various operations.  The various
-categories we laid out can take contributions as has been shown.  The `StopWatch` class relies on
-the [ANSI-C `gettimeofday()`](https://pubs.opengroup.org/onlinepubs/009604599/functions/gettimeofday.html)
+categories we laid out can take contributions as has been shown.  The
+[`StopWatch`](classstormm_1_1testing_1_1StopWatch.html) class relies on the
+[ANSI-C `gettimeofday()`](https://pubs.opengroup.org/onlinepubs/009604599/functions/gettimeofday.html)
 function and has a precision of microseconds.  To summarize:
 ```
 #include "../../src/UnitTesting/stopwatch.h"
@@ -324,7 +330,54 @@ command line:
 ```
 >> /stormm/build/dir/apps/Tutorial/tutorial_i.stormm.cuda
 
+This program is running on a NVIDIA GeForce RTX 4090 card:
+  Major.minor architecture version: 8.9
+  Streaming multiprocessors: 128
+  Card RAM: 24176 megabtyes
+  Global cache size: 75497472 bytes
+
+Contents of xferable_integers:
+    -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9  10   ( 16)
+    11  12  13  14  15  16  14  12  10   8   6   4   2   0  -2  -4   ( 32)
+    -6  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   ( 48)
+     7   8   9  10  11  12  13  14  15  16  14  12  10   8   6   4   ( 64)
+     2   0  -2  -4  -6  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   ( 80)
+     3   4   5   6   7   8   9  10  11  12  13  14  15  16  14  12   ( 96)
+    10   8   6   4   2   0  -2  -4  -6  -8  -7  -6  -5  -4  -3  -2   (112)
+    -1   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14   (128)
+
+The sum of the set of integers on the host is:          522
+Before downloading, the sum of the answer buffer reads: 0
+After downloading, the sum of the answer buffer reads:  522
+
+Timings data for STORMM Tutorial I (4 categories, total 0.1238 seconds):
+
+ +--------------------------+--------------------------------------------------------+
+ |      Category Name       | Samples   Total    Mean    Standard   Minimum  Maximum |
+ |                          |          Time, s  Time, s  Deviation  Time, s  Time, s |
+ +--------------------------+--------------------------------------------------------+
+ | Miscellaneous            |       2   0.0002   0.0001     0.0001   0.0000   0.0002 |
+ | Assign a GPU             |       1   0.1225   0.1225     0.0000   0.1225   0.1225 |
+ | Prep the GPU             |       1   0.0010   0.0010     0.0000   0.0010   0.0010 |
+ | Experiment with integers |       1   0.0000   0.0000     0.0000   0.0000   0.0000 |
+ +--------------------------+--------------------------------------------------------+
 ```
+As any CUDA tutorial will explain, the host-side data is independent of the device-side data, so
+the answer will not be known on the host until the download is complete.  The `Hybrid` array
+`xferable_integers` was allocated in the default `HybridFormat::EXPEDITED` mode, as no format was
+specified in the constructor.  This allocates page-locked memory on the host and separate memory on
+the device.  Had the array been allocated in `HybridFormat::UNIFIED` mode,
+[CUDA's "managed memory" system](https://developer.nvidia.com/blog/unified-memory-cuda-beginners/)
+would have created a type of memory which, in reality, takes up separate space on both the host and
+device.  But, through the magic of NVIDIA's Page Migration Engine, the two arrays are always
+synchronized line for line in the code.  No download would have been necessary, but if the
+developer knows when downloads or uploads will be needed, `HybridFormat::EXPEDITED` is more
+efficient.  Convenient features like this are incorporated into many of STORMM's basic objects.
 
 ## Summary
-This tutorial
+This tutorial covered the basics of setting up a new program in the STORMM code base, establishing
+a wall time monitor, and moving memory onto and off of the GPU.  In the program execution, we see
+that the process of identifying a GPU, while short, is lengthy compared to the speed at which a
+computer might process even a million array elements.  In later tutorials, we will demonstrate how
+the `Hybrid` dynamic array class builds topologies, coordinate objects, and other aspects of the
+code for chemical analysis.
