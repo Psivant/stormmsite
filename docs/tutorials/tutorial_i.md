@@ -6,8 +6,8 @@ data from one resource to another, then launch kernels to process that data.  A 
 is the administrator for a series of workhorse GPU processes, and this is reflected in the C++ to
 CUDA transition that STORMM facilitates for NVIDIA hardware.
 
-It begins with one array.  Constants can be sent to the GPU as kernel launch parameters, but
-results from a CUDA kernel must, in general, be written to memory that the GPU can access (e.g. its
+It starts with one array.  Constants can be sent to the GPU as kernel launch parameters, but
+results from those kernel must, in general, be written to memory that the GPU can access (e.g. its
 on-board memory, or
 [memory on the host allocated in such a way that the GPU can see it](https://developer.download.nvidia.com/compute/DevZone/docs/html/C/doc/html/group__CUDART__MEMORY_g15a3871f15f8c38f5b7190946845758c.html).  The contents of the array can then be downloaded by the CPU in the same way that the CPU
 can upload data to the device.  STORMM encapsulates memoory management through the templated
@@ -15,8 +15,17 @@ can upload data to the device.  STORMM encapsulates memoory management through t
 
 The first step in writing the program is to recognize the GPU.  STORMM provides several classes to
 identify and select all available GPUs on the system.  They are the `GpuDetails` and `HpcConfig`,
-available by including the following header files:
+available by including the following header files.  When STORMM is compiled for High Performance
+Computing (HPC) and the
+[NVIDIA Compute Unified Device Architecture (CUDA)](https://developer.nvidia.com/cuda-zone)
+framework, the `GpuDetails` header includes the requisite `cuda_runtime.h` library, but we can
+replicate that below for clarity:
 ```
+#ifdef STORMM_USE_HPC
+#  ifdef STORMM_USE_CUDA
+#    include <cuda_runtime.h>
+#  endif
+#endif
 #include "/stormm/home/src/card/gpu_details.h"
 #include "/stormm/home/src/card/hpc_config.h"
 ```
@@ -122,6 +131,7 @@ ping-pong between two limits.
   }
 ```
 
+## Abstracts: Pointers to the Data 
 This is an opportunity to demonstrate the C++ to C, C to CUDA strategy that guides much of STORMM's
 development.  C++ made big improvements in its 2011 update, among them compilers getting smart
 about seeing the subscript array operator on `std::vector` objects and optimizing the pointer
@@ -146,8 +156,12 @@ human-readable format:
   }
   printf("\n");
 ```
+This strategy of creating pointers and length constants to traverse arrays is taken to a higher
+degree in the class abstract approach found throughout much of STORMM, as will be evident in later
+tutorials.
 
-Next, we can consider some operation that invovles the array as a whole: the sum of all elements.
+## Analysis of the Data on the CPU and the GPU
+Next, we can consider some operation that involves the array as a whole: the sum of all elements.
 This is trivial to do in a single-threaded C program by looping over each element, as was done
 above to display the values.  In general, we must consider cases where the array might be so large
 that the data type used to hold the summation might break: a floating point value could overflow to
@@ -166,6 +180,7 @@ is built to work in a CPU-only environment, to compile without the benefits of C
 development can continue and features that do not involve massive number crunching remain
 accessible on machines without compatible GPUs.
 
+## Templating and the Transition from C++ to CUDA
 In order to launch a CUDA kernel, we must write a separate CUDA unit, with a **.cu** rather than
 **.cpp** extension.  The CUDA unit will also be able to understand templated CUDA kernels, files
 that STORMM stuffs into files with **.cuh** extensions (while many C++ programmers write templated
@@ -181,3 +196,135 @@ know what a kernel, much less a template implementation for a kernel, really is.
 program will `#include` the header describing the launching function, as illustrated in the
 following diagram:
 
+In the same way that a C++ program cannot `#include` CUDA code, in our case critical headers for
+templated kernels, the CUDA unit will not be able to accept templated inputs from the C++ compiled
+code object file.  Rather, we must convert all pointers to a specific type to pass through the
+C++ : CUDA barrier, then undo the conversion on the other side.  This is done via the universal
+C pointer type, `void*`.  We will convert the pointers for our array of integers, as well as the
+buffer array we are using to hold the answers from each GPU thread block, to `void*`, then codify
+the `int` data type and pass that as another input parameter to the CUDA unit.  The type index
+of the `int` data type is computed by STORMM at runtime and is available through the `data_types`
+library.  As a final condition, we must take the pointer to our array's data on the GPU device, not
+on the CPU host.  Because the data in the integer array is not intended to change during the
+summation, we will `const` qualify that pointer as well as its `void*` alias. (Aside, it's OK to
+feed the `int*` pointers to a function that expects to take `void*`.  The conversion will be
+automatic, although the tutorial avoids this shorthand for clarity.) A summary of the code:
+```
+#include "/stormm/home/src/DataTypes/common_types.h"
+
+  // Allocate a buffer for the answer
+  Hybrid<int> sum_of_xi(gpu.getSMPCount(), "Our_Answer");
+  const int* devc_xi_ptr = xferable_integers.data(HybridTargetLevel::DEVICE);
+  const void* vdevc_xi_ptr = reinterpret_cast<const void*>(devc_xi_ptr);
+  int* sum_ptr = sum_of_xi.data(HybridTargetLevel::DEVICE);
+  void* vsum_ptr = reinterpret_cast<const void*>(sum_ptr);  
+```
+
+All that remains on the C++ side is to stage the data on the GPU and then issue a call to the
+function that will launch the kernel (a memory transfer to or from the GPU can be called from a
+C++ compiled code object, even though a kernel cannot).  The relevant code:
+```
+xferable_integers.upload();
+wrapTheSummationLaunch(vdevc_xi_ptr, nxi, vsum_ptr, int_type_index, gpu);
+```
+
+## The CUDA Side of Things
+The code for our CUDA unit is not complex.  It must define an implementation for the wrapper
+function `wrapTheSummationLaunch`, which branches over various recognized arithemtic types to be
+summed:
+```
+extern void wrapTheSummationLaunch(const void* vdata, const size_t n, void* vresult,
+                                   const size_t ct_data, const GpuDetails &gpu) {
+  if (ct_data == int_type_index) {
+    const int* data = reinterpret_cast<const int*>(vdata);
+    int* result = reinterpret_cast<int*>(vresult);
+    kSumVector<int, int><<<gpu.getSMPCount(), large_block_size>>>(data, n, result);
+  }
+  else if (ct_data == llint_type_index) {
+    const llint* data = reinterpret_cast<const llint*>(vdata);
+    llint* result = reinterpret_cast<llint*>(vresult);
+    kSumVector<llint, llint><<<gpu.getSMPCount(), large_block_size>>>(data, n, result);
+  }
+  else if (ct_data == double_type_index) {
+    const double* data = reinterpret_cast<const double*>(vdata);
+    double* result = reinterpret_cast<double*>(vresult);
+    kSumVector<double, double><<<gpu.getSMPCount(), large_block_size>>>(data, n, result);
+  }
+  else if (ct_data == float_type_index) {
+    const float* data = reinterpret_cast<const float*>(vdata);
+    float* result = reinterpret_cast<float*>(vresult);
+    kSumVector<float, float><<<gpu.getSMPCount(), large_block_size>>>(data, n, result);
+  }
+}
+```
+Note the presence of the `extern` qualifier in the CUDA implementation file.  This does not apply
+to the function declaration in the associated header file.
+
+The sum of the contents in our array may be computed on the host as well.  It is 522.  To check the
+result, we can use one of STORMM's built-in vector math functions:
+```
+#include "/stormm/home/src/Math/vector_ops.h"
+
+  printf("The sum of the set of integers on the host is:          %d\n", sum<int>(host_xi_ptr));
+```
+The summation is overloaded to accept a Hybrid object, a `std::vector<T>`, or a C-style array with
+a trusted length.  Many other vector-applicable functions work the same way.  For summations in
+particular, if a valid `GpuDetails` object is provided, the summation will run over the data
+present on the GPU device, with the option to have a temporary buffer array created just for that
+process (no need for manual allocation of `sum_of_xi` as we did above).  However, overloads of the
+`sum` function that accept GPU inputs are currently only callable from CUDA units.  Other overloads
+are callable from both C++ and CUDA code, as is seen above.  One other thing to note is that the
+`sum` function does take two formal template arguments, one for the data and another for the
+type to store the running sum--the data type is inferred from the input, while the type of the
+running sum is provided in the `sum<int>` call.
+
+## The `StopWatch` for Tracking Wall Time
+As a final analysis, we can add lines to check the timing of various operations.  The various
+categories we laid out can take contributions as has been shown.  The `StopWatch` class relies on
+the [ANSI-C `gettimeofday()`](https://pubs.opengroup.org/onlinepubs/009604599/functions/gettimeofday.html)
+function and has a precision of microseconds.  To summarize:
+```
+#include "../../src/UnitTesting/stopwatch.h"
+
+  Stopwatch the_clock("STORMM Tutorial I");
+  const int gpu_asgn_tm = the_clock.addCategory("Assign a GPU");
+  const int gpu_prep_tm = the_clock.addCategory("Prep the GPU");
+  const int int_experiment_tm = the_clock.addCategory("Experiment with integers");
+  
+  // Assign time since last measurement based on category name (slower, use only in high-level
+  // procedures)
+  the_clock.assignTime("Assign a GPU");
+
+  // Assign time since last measurement based on category index (faster, use when taking repeated
+  // samples during an inner loop)
+  the_clock.assignTime(int_experiment_tm);
+
+  // Assign time since last measurement to the default "miscellaneous" category (specify index 0,
+  // or call with no argument)
+  the_clock.assignTime();
+  the_clock.assignTime(0);
+  
+  // Print the timings results (precision optional)
+  the_clock.printResults();
+```
+
+The program discussed in this tutorial can be found in the following files:
+- **/stormm/home/apps/Tutorial/tutorial_i.cpp** (C++ implementation)
+- **/stormm/home/apps/Tutorial/hpc_tutorial_i.cu** (CUDA unit)
+- **/stormm/home/apps/Tutorial/hpc_tutorial_i.h** (header for inclusion by the C++ program)
+
+The templated implementations for C++ summation can be found in
+**/stormm/home/src/Math/summation.tpp** (included by
+**/stormm/home/apps/Tutorial/tutorial_i.cpp**), while templated implementations for CUDA kernels
+are found in **/stormm/home/src/Math/hpc_summation.cuh** (included by
+**/stormm/home/apps/Tutorial/hpc_tutorial_i.cu**)
+
+The tutorial is one of the applications compiled with the basic STORMM build, and can be run on the
+command line:
+```
+>> /stormm/build/dir/apps/Tutorial/tutorial_i.stormm.cuda
+
+```
+
+## Summary
+This tutorial
