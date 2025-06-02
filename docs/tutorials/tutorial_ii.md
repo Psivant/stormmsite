@@ -30,17 +30,19 @@ function in each generator, which jumps forward 2<sup>96</sup> steps in Xoroshir
 
 Four billion long jumps can (in theory) be taken in Xoroshiro128+ and billions upon billions in
 Xoshiro256++, but according to the author the Xoroshiro128+ generator should not be used to
-generate thousands of streams of random numbers, as the different segments of the generator cannot
-all be guaranteed to hold without detectable correlations.
+generate thousands of streams of random numbers, as the different segments of the orbit cannot be
+guaranteed to be free of detectable correlations.
 [(Xoroshiro128+ also fails the Big Crush test.)](https://www.sciencedirect.com/science/article/pii/S0377042718306265)
 STORMM therefore uses the Xoshiro256++ generator in its GPU applications, but for the purposes of
-this tutorial it's sufficient to assign one segment of the orbit to each particle and sally forth.
+this tutorial it's sufficient to assign one segment of the 128-bit orbit to each particle and sally
+forth.
 
 The generators are easy to operate from the standpoint of a CPU program: each is encapsulated in
 its own C++ class and ticks forward as it produces random numbers.  For GPU operations, there are
 special, vectorized initializers and (for kernels) a collection of `__device__` functions that can
 be included in any CUDA unit without needing to resort to relocatable device code (`-rdc` for those
-familiar with compiler commands).  
+familiar with compiler commands).  The C++ initialization is simple, while the GPU initialization
+is packaged within `initXoroshiro128pArray` and comes with the STORMM libraries.
 ```
 #include "../../src/Random/random.h"
 
@@ -61,7 +63,7 @@ Cartesian *x* and *y* axes.  The basic form of the class would then be:
 ```
 #include "/stormm/home/src/Accelerator/gpu_details.h"
 #include "/stormm/home/src/Accelerator/hybrid.h"
-#include "../../src/DataTypes/common_types.h"
+#include "/stormm/home/src/DataTypes/common_types.h"
 #include "/stormm/home/src/Random/random_enumerators.h"
 
 using stormm::card::GpuDetails;
@@ -202,9 +204,9 @@ struct RandomWalkReader {
   const ullint2* rng_stt;        // Random number state vectors driving each particle
 };
 ```
-The struct constructors themselves are not displayed, but can be found in the tutorial program,
-**/stormm/home/apps/Tutorial/randomwalk.cpp**.  Additions to the `RandomWalk` class for emitting
-these abstracts can be as follows:
+The struct constructors themselves are not displayed, but can be found in the tutorial's class
+implementation, **/stormm/home/apps/Tutorial/randomwalk.cpp**.  Additions to the `RandomWalk`
+class for emitting these abstracts can be as follows:
 ```
 RandomWalkWriter RandomWalk::data(const HybridTargetLevel tier) {
   return RandomWalkWriter(coordinate_count, bits, fluctuation, fluctuation_style,
@@ -220,19 +222,19 @@ const RandomWalkReader RandomWalk::data(const HybridTargetLevel tier) const {
 ```
 
 As will be seen, the primary purpose of the abstracts is not to do away with the tedious aspects of
-C++, but to eliminate the parts of a C++ class that a CUDA kernel cannot incorporate.  With the
-basic class mechanics and abstracts laid down, the core functionality of the `RandomWalk` class
-must be encapsulated in the constructor and a public member function to drive the simulation
-forward.  The minimal constructor will call a `private` member function `allocate` to perform the
-`Hybrid` allocations described above, then seed the random number gnererator state vectors on the
-CPU or, if applicable, on the GPU.  Note that the code paths differ absed on whether the GPU mode
-is compiled, and that the GPU kernel launcher `initXoroshiro128p` will download the results from
-the GPU so that the CPU and GPU both have the same state vectors when the function returns.
-Because `Hybrid` object data is initialized to zero, a single cycle of the public member function
-used to advance the simulation can be used to seed particle positions.  If it is desired that
-particles initially occupy a different configuration, some new function could be written but there
-is no need to clutter the tutorial.  Note that the CPU and GPU advancement take place in separate
-calls.  More details can be found in the implementation documentation in
+C++, but to shed the parts of a C++ class that a CUDA kernel cannot incorporate.  With the basic
+class mechanics and abstracts laid down, the core functionality of the `RandomWalk` class must be
+encapsulated in the constructor and a public member function to drive the simulation forward.  The
+minimal constructor will call a `private` member function `allocate` to perform the `Hybrid`
+allocations described above, then seed the random number gnererator state vectors on the CPU or, if
+applicable, on the GPU.  Note that the code paths differ absed on whether the GPU mode is compiled,
+and that the GPU kernel launcher `initXoroshiro128p` will download the results from the GPU so that
+the CPU and GPU both have the same state vectors when the function returns.  Because `Hybrid`
+object data is initialized to zero, a single cycle of the public member function used to advance
+the simulation can be used to seed particle positions.  If it is desired that particles initially
+occupy a different configuration, some new function could be written but there is no need to
+clutter the tutorial.  Note that the CPU and GPU advancement take place in separate calls.  More
+details can be found in the implementation documentation in
 **/stormm/home/apps/Tutorial/randomwalk.cpp**.
 ```
 RandomWalk::RandomWalk(const int coordinate_count_in, const int bits_in, const int prng_seed_in,
@@ -268,7 +270,7 @@ The CPU form of the `advance` function makes clear what the GPU function will ne
 over all particles, read the particle's random number generator state, and then produce random
 numbers to move the particle along in the two-dimensional plane for the requested number of steps.
 There are no interactions between the particles. (Apologies if decoupling the *x* and *y*
-dimensions rather than using a polar coordinate system based on the stated step size is incorrect
+dimensions, rather than using a polar coordinate system based on the stated step size, is incorrect
 from a theoretical perspective--the purpose is not a formal investigation of random walk diffusion
 but to present C++ and CUDA mechanics.) We create a temporary `Xoroshiro128pGenerator` and use its
 `setState` method to instantly place it on tracj with a given particle's pseudo-random stream.  The
@@ -324,7 +326,7 @@ void RandomWalk::advance(const int step_count, const HybridTargetLevel tier,
   }
 }
 ```
-One important aspect of the coordiante storage, noted in the introduction and made clear by the
+One important aspect of the coordinate storage, noted in the introduction and made clear by the
 `advance` function, is fixed-precision.  In this example, we multiply the real-valued number by
 some power of two, losing no information as the fraction (mantissa) of the floating point format
 does not change.  The result is then converted to an integer (which may lose information) and
@@ -405,14 +407,17 @@ registers throughout the entire set of simulated steps avoids what would otherwi
 memory traffic (although it would mitigated to a great extent, in this case, by L1 cache).  For
 even better memory bandwidth conservation, the position of the particle itself could be taken into
 registers (made into a local variable) and manipulated through the requested number of steps before
-the final result is written back to the arrays in main GPU memory.
+the final result is written back to the arrays in main GPU memory.  A minor detail: the intrinsic
+function `__double2ll_rn` (round nearest) matches the result of `llround` (round `double` to
+`long long int`) in CPU code.  If, instead, the double-precision real were recast to an integer in
+the C++ code, this would be rounding towards zero and `__double2ll_rz` would be appropriate.
 
 In order to complete the program, we will need to add a basic user interface, for which we use the
-standard C `argc` and `argv[]` command line input variables.  An abridged version follows.  For the
-complete code, see **/stormm/home/apps/Tutorial/tutorial_ii.cpp**.
+standard C `argc` and `argv[]` command line input variables.  An abridged version follows.  STORMM
+comes with substantial support for developers to create their own control blocks and check input
+for validity, as will be demonstrated in a later tutorial.  For the complete code,
+see **/stormm/home/apps/Tutorial/tutorial_ii.cpp**.
 ```
-
-
 int main(int argc, const char* argv[]) {
   if (argc < 3) {
     printf("Usage: %s\n"
@@ -493,5 +498,5 @@ Final coordinates for selected particles:
   Particle  10944 :    186.5278    -48.3775     186.5278    -48.3775
   Particle  12768 :   -177.0526     76.6744    -177.0526     76.6744
 ```
-The results continue to track between CPU and GPU programs for a million, or even ten million
+The results continue to track between CPU and GPU programs for a million or even ten million
 steps.
