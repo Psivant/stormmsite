@@ -1,18 +1,19 @@
 # A Random Walk Simulator in STORMM
 One of the most significant technical challenges undertaken in the STORMM project involves making
 the code's results reproducible, not just in a scientific sense (we provide the code and describe
-the approach in enough detail that another investigator could replicate the results) but in a
-numeric sense.  The
+the approach in enough detail that another investigator could replicate the results) but in the
+numerics.  The
 [IEEE standard for floating point arithmetic](https://standards.ieee.org/ieee/754/6210/) admits
 [some variabilities](https://grouper.ieee.org/groups/msc/ANSI_IEEE-Std-754-2019/background/addendum.html)
 and also changes in the order of operations which can change the way in which accepted roundoff
-errors combine.  Therefore, different chipsets should be expected to produce different answers, but
-a highly parallel programming environment such as a GPU demands a high degree of consistency in
-order to spot race conditions or other subtle errors in the code.  STORMM development strives for
-the highest degrees of numerical consistency, employing techniques such as those demonstrated in
-this tutorial.  To showcase the capabilities, we will program a simple random walk in two
-dimensions, with a user-specifiable number of particles and steps, with the goal of reproducing
-GPU results on the CPU.
+errors combine.  Therefore, different chipsets should be expected to produce different answers in
+a long series of arithmetic operations like a simulation, but a highly parallel programming
+environment such as a GPU demands a high degree of consistency in order to spot race conditions or
+other subtle errors in the code.  STORMM development strives for the highest degrees of numerical
+consistency, employing techniques such as those demonstrated in this tutorial.  To showcase the
+capabilities, we will program a simple random walk in two dimensions, with a user-specifiable
+number of particles and steps.  The goal will be to reproduce GPU results with a CPU
+implementation.
 
 ## Random Number Generation in STORMM
 STORMM makes use of the XOR-shift generators,
@@ -27,7 +28,7 @@ Xoroshiro128+ and 2^128^ steps in the case of Xoshiro256++.  There is also a "lo
 in each generator, which jumps forward 2^96^ steps in Xoroshiro128+ and 2^192^ steps in
 Xoshiro256++.
 
-Four billion long jumps can (theoretically) be taken in Xoroshiro128+ and billions upon billions in
+Four billion long jumps can (in theory) be taken in Xoroshiro128+ and billions upon billions in
 Xoshiro256++, but according to the author the Xoroshiro128+ generator should not be used to
 generate thousands of streams of random numbers, as the different segments of the generator cannot
 all be guaranteed to hold without detectable correlations.
@@ -337,10 +338,28 @@ As seen above, a mutable abstract is called by the class itself to feed into an 
 function, `launchRandomWalkAdvance`.  The essential contents of that function and the kernel it
 launches are presented below.
 ```
-#include "../../src/Accelerator/gpu_details.h"
+#include "/stormm/home/src/Accelerator/gpu_details.h"
+#include "/stormm/home/src/DataTypes/common_types.h"
+#include "/stormm/home/src/DataTypes/stormm_vector_types.h"
+#include "/stormm/home/src/Random/random.h"
 #include "randomwalk.h"
 
 using stormm::card::GpuDetails;
+using stormm::constants::large_block_size;
+using stormm::data_types::llint;
+using stormm::data_types::ullint;
+using stormm::data_types::ullint2;
+using stormm::data_types::ullint4;
+using stormm::random::xrs128p_jump_i;
+using stormm::random::xrs128p_jump_ii;
+using stormm::random::xrs256pp_jump_i;
+using stormm::random::xrs256pp_jump_ii;
+using stormm::random::xrs256pp_jump_iii;
+using stormm::random::xrs256pp_jump_iv;
+using stormm::random::rng_unit_bin_offset;
+using stormm::random::rng_unit_bin_offset_f;
+
+#include "/stormm/home/src/Random/xor_shift_rng.cui"
 
 __global__ void __launch_bounds__(large_block_size, 1)
 kRandomWalkAdvance(const int step_count, RandomWalkWriter rww) {
@@ -450,7 +469,7 @@ Did we succeed?  Does the CPU predict and track the GPU for a simulation?  Here 
 14592 particles simulated over 10000 steps (the number of particles was chosen large enough that
 multiple GPU thread blocks would be sure to participate):
 ```
->> /stormm/home/apss/Tutorial/tutorial_ii.stormm.cuda -n 14592 -x 10000 -r 8
+>> /stormm/home/apps/Tutorial/tutorial_ii.stormm.cuda -n 14592 -x 10000 -r 8
 
 Initial coordinates for selected particles:
                       X (host)    Y (host)    X (device)  Y (device)
