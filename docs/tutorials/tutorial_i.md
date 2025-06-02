@@ -314,10 +314,30 @@ function and has a precision of microseconds.  To summarize:
   the_clock.printResults();
 ```
 
+## Compilation
 The program discussed in this tutorial can be found in the following files:
 - **/stormm/home/apps/Tutorial/tutorial_i.cpp** (C++ implementation)
 - **/stormm/home/apps/Tutorial/hpc_tutorial_i.cu** (CUDA unit)
 - **/stormm/home/apps/Tutorial/hpc_tutorial_i.h** (header for inclusion by the C++ program)
+
+The CMake file **/stormm/home/apps/CMakeLists.txt** is configured to look in the Tutorial folder
+for any additional instructions (which will take the form of another **CMakeLists.txt** file).
+Those instructions for this program are:
+```
+set(APP_NAME "tutorial_i.${STORMM_APP_SUFFIX}")
+
+add_executable(${APP_NAME}
+        ${CMAKE_CURRENT_SOURCE_DIR}/tutorial_i.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/hpc_tutorial_i.cu
+        ${CMAKE_CURRENT_SOURCE_DIR}/hpc_tutorial_i.h)
+
+target_sources(${APP_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/tutorial_i.cpp)
+
+target_link_libraries(${APP_NAME} ${PROJECT_NAME})
+
+install(TARGETS ${APP_NAME}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+```
 
 The templated implementations for C++ summation can be found in
 **/stormm/home/src/Math/summation.tpp** (included by
@@ -325,8 +345,7 @@ The templated implementations for C++ summation can be found in
 are found in **/stormm/home/src/Math/hpc_summation.cuh** (included by
 **/stormm/home/apps/Tutorial/hpc_tutorial_i.cu**)
 
-The tutorial is one of the applications compiled with the basic STORMM build, and can be run on the
-command line:
+With STORMM built, the pre-installed tutorial can be run on the command line:
 ```
 >> /stormm/build/dir/apps/Tutorial/tutorial_i.stormm.cuda
 
