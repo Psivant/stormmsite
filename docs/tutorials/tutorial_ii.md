@@ -23,10 +23,10 @@ cryptography, the presence of "jump" and "long jump" methods in each generator m
 molecular simulations and other efforts in computational science.  The particular orbit of any of
 the generators depends on some of the internal bit shift settings, but with any given seed the
 sequence begins at one point in the series and can then be fast-forwarded by the square root of
-the orbit's total length, 2^64^ (approximately 18 billion billion) steps in the case of
-Xoroshiro128+ and 2^128^ steps in the case of Xoshiro256++.  There is also a "long jump" function
-in each generator, which jumps forward 2^96^ steps in Xoroshiro128+ and 2^192^ steps in
-Xoshiro256++.
+the orbit's total length, 2<sup>64</sup> (approximately 18 billion billion) steps in the case of
+Xoroshiro128+ and 2<sup>128</sup> steps in the case of Xoshiro256++.  There is also a "long jump"
+function in each generator, which jumps forward 2<sup>96</sup> steps in Xoroshiro128+ and
+2<sup>192</sup> steps in Xoshiro256++.
 
 Four billion long jumps can (in theory) be taken in Xoroshiro128+ and billions upon billions in
 Xoshiro256++, but according to the author the Xoroshiro128+ generator should not be used to
