@@ -338,6 +338,9 @@ target_link_libraries(${APP_NAME} ${PROJECT_NAME})
 install(TARGETS ${APP_NAME}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 ```
+New programs written by developers can be created in the local **/stormm/home/apps/Tutorial/**
+directory, with modest local edits to the **CMakeLists.txt** file in that directory, to test
+personal projects created in STORMM.
 
 The templated implementations for C++ summation can be found in
 **/stormm/home/src/Math/summation.tpp** (included by
