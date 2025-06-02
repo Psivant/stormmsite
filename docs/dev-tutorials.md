@@ -17,3 +17,21 @@ identifies an available GPU, manages memory on the CPU host and GPU device, and 
 between the two resources.  For adept developer, the tutorial will also demonstrate the challenges
 of implementing templated GPU kernels in the context of a C++ program and some fundamental truths
 about GPU computing strategies.
+
+## [Advanced Tutorial: A Random Walk Simulator Written in STORMM](./tutorials/tutorial_ii)
+In order to present the principles and methods behind molecular dynamics and docking programs
+written with STORMM, a small program has been written to carry out random walks with particles on
+a two-dimensional surface.  Useful features of the primary memory management class, random number
+generation, fixed-precision arithmetic, and exception reporting will be covered.  The complete
+program comprises some 600 lines of C++ and 60 lines of CUDA code.
+
+## [Making a Collection of Systems in STORMM](./tutorials/tutorial_iii)
+STORMM is meant to run with as many molecular systems as the developer needs to solve a problem.
+Learn to leverage STORMM's capabilities for listing files, reading topologies and input
+coordinates, and creating a "synthesis" of all the named molecular systems.
+
+## [Advanced Tutorial: Creating Custom User Input Blocks](./tutorials/tutorial_iv)
+Programs must accept user input in order to work on real problems, and custom programs may need to
+understand unique commands.  STORMM has facilities for tailoring command line input and input
+file control blocks to the developer's needs.  The features include a system for adding help
+messages and descriptors 
