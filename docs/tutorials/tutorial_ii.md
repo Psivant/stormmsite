@@ -336,6 +336,7 @@ more aggressive rounding at critical junctures, rather than letting minor differ
 over time.  The level of rounding is an explicit choice of the developer, and in general can be
 selected so as not to risk the validity of the simulation in any degree.
 
+## Attaching the Equivalent GPU Code
 As seen above, a mutable abstract is called by the class itself to feed into an `extern void` free
 function, `launchRandomWalkAdvance`.  The essential contents of that function and the kernel it
 launches are presented below.
@@ -412,6 +413,7 @@ function `__double2ll_rn` (round nearest) matches the result of `llround` (round
 `long long int`) in CPU code.  If, instead, the double-precision real were recast to an integer in
 the C++ code, this would be rounding towards zero and `__double2ll_rz` would be appropriate.
 
+## Tying It All Together: The Main Program
 In order to complete the program, we will need to add a basic user interface, for which we use the
 standard C `argc` and `argv[]` command line input variables.  An abridged version follows.  STORMM
 comes with substantial support for developers to create their own control blocks and check input
