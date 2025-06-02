@@ -51,6 +51,7 @@
   // This makes the text white. Be aware of low contrast on light backgrounds.
   code {
     color: white !important;
+    background-color: rgba(127, 127, 127) !important;
   }
   pre code {
     color: white !important;
