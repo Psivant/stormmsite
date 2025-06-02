@@ -472,6 +472,35 @@ using namespace tutorial;
 #endif  
 ```
 
+## Making It Compile
+In order for the new tutorial program to compile along with the STORMM build, we have added some
+content to the **/stormm/home/apps/Tutorial/CMakeLists.txt** file.  The critical components are:
+- Reset the `APP_NAME` variable to that of the new tutorial program
+- Use the `add_executable` CMake command, with `APP_NAME` and a list of all code implementation and
+  header files as arguments
+- Add the main program's implementation to the `target_sources`
+- Link the application to the broader STORMM project
+- Install
+The relevant code for this case is:
+```
+set(APP_NAME "tutorial_ii.${STORMM_APP_SUFFIX}")
+
+add_executable(${APP_NAME}
+        ${CMAKE_CURRENT_SOURCE_DIR}/tutorial_ii.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/randomwalk.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/randomwalk.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/hpc_randomwalk.cu
+        ${CMAKE_CURRENT_SOURCE_DIR}/hpc_randomwalk.h)
+
+target_sources(${APP_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/tutorial_ii.cpp)
+
+target_link_libraries(${APP_NAME} ${PROJECT_NAME})
+
+install(TARGETS ${APP_NAME}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+```
+
+## Modeling Diffusion in the Plane
 Did we succeed?  Does the CPU predict and track the GPU for a simulation?  Here are the results for
 14592 particles simulated over 10000 steps (the number of particles was chosen large enough that
 multiple GPU thread blocks would be sure to participate):
