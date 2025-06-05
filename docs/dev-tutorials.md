@@ -25,13 +25,14 @@ a two-dimensional surface.  Useful features of the primary memory management cla
 generation, fixed-precision arithmetic, and exception reporting will be covered.  The complete
 program comprises some 600 lines of C++ and 60 lines of CUDA code.
 
-## [Making a Collection of Systems in STORMM](./tutorials/tutorial_iii)
-STORMM is meant to run with as many molecular systems as the developer needs to solve a problem.
-Learn to leverage STORMM's capabilities for listing files, reading topologies and input
-coordinates, and creating a "synthesis" of all the named molecular systems.
-
-## [Advanced Tutorial: Creating Custom User Input Blocks](./tutorials/tutorial_iv)
+## [Advanced Tutorial: Creating Custom User Input Blocks](./tutorials/tutorial_iii)
 Programs must accept user input in order to work on real problems, and custom programs may need to
 understand unique commands.  STORMM has facilities for tailoring command line input and input
 file control blocks to the developer's needs.  The features include a system for adding help
-messages and descriptors 
+messages and descriptors to the native display system and create an interactive manual that users
+navigate from the command line.
+
+## [Making a Collection of Systems in STORMM](./tutorials/tutorial_iv)
+STORMM is meant to run with as many molecular systems as the developer needs to solve a problem.
+Learn to leverage STORMM's capabilities for listing files, reading topologies and input
+coordinates, and creating a "synthesis" of all the named molecular systems.
