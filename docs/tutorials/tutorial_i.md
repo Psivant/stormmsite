@@ -222,7 +222,7 @@ automatic, although the tutorial avoids this shorthand for clarity.) A summary o
   const int* devc_xi_ptr = xferable_integers.data(HybridTargetLevel::DEVICE);
   const void* vdevc_xi_ptr = reinterpret_cast<const void*>(devc_xi_ptr);
   int* sum_ptr = sum_of_xi.data(HybridTargetLevel::DEVICE);
-  void* vsum_ptr = reinterpret_cast<const void*>(sum_ptr);  
+  void* vsum_ptr = reinterpret_cast<void*>(sum_ptr);  
 ```
 
 All that remains on the C++ side is to stage the data on the GPU and then issue a call to the
