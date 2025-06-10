@@ -21,17 +21,17 @@ density.
 - Run a file stream by that `NamelistEmulator` object to load it up user input directives
 - Write an original class to offload information from the `NamelistEmulator` and digest it for
   the rest of the program
-The third step is not essential, but in general is a good idea to streamline the extraction of
+The third step is not essential, but in general it is a good idea to streamline the extraction of
 information from a general-purpose format (where each access requires interpreting, checking, and
 comparing a character string) to an application-specific dispenser.  STORMM also comes with a
 number of modular namelists, e.g. `&dynamics` and `&precision`, which can be included in programs
 from the main libraries.  Each of these native input blocks comes with its own unique class to
-digest the user's input by the strategy above, e.g.
+filter the user's input by the strategy above, e.g.
 [`DynamicsControls`](../doxygen/classstormm_1_1namelist_1_1DynamicsControls.html) or
 [`PrecisionControls`](../doxygen/classstormm_1_1namelist_1_1PrecisionControls.html)
 
 The preferred route is to make a function to configure the `NamelistEmulator` with input elements,
-and have that function take the user input file or a
+then have that function take the user input file or a
 [`TextFile`](../doxygen/classstormm_1_1parse_1_1TextFile.html) class object that has already loaded
 the input text into memory.  The bulk of this function will involve configuring the
 `NamelistEmulator` with keywords, defaults and help messages.  Before returning the
@@ -40,9 +40,8 @@ the input text into memory.  The bulk of this function will involve configuring 
 in an ascii text file to convert the user input into a general-purpose dispenser which can then
 dispense the information by issuing queries based on those keywords.  The function that manages
 configuration and loading of the `NamelistEmulator` object for a given control block will be called
-by the class constructor for the application-specific class which further digests information in
-the `NamelistEmulator` to make the user input available through specific accessor functions.  An
-abbreviated protocol is written below:
+by the constructor for the application-specific class that dispense information to the rest of the
+program.  An abbreviated header for the protocol is written below:
 ```
 #include "/stormm/home/src/Namelists/namelist_emulator.h"
 #include "/stormm/home/src/Parsing/textfile.h"
@@ -68,7 +67,9 @@ private:
 
 In the example above, which will be expanded in the Tutorial III program, the namelist `&star` is
 configured into a `NamelistEmulator` by the `starInput` function.  The contents of that function,
-which again accomplishes the first and second stages of the overall process, could be:
+which again accomplishes the first and second stages of the overall process, could be as follows
+(a slightly longer version is found in the tutorial "answer" program,
+**/stormm/home/apps/Tutorial/tutorial_iii.cpp**).
 ```
 #include "/stormm/home/src/Constants/behavior.h"
 #include "/stormm/home/src/Namelists/input.h"
@@ -81,8 +82,8 @@ using stormm::namelist::NamelistType;
 using stormm::parse::WrapTextSearch;
 
 NamelistEmulator starInput(const TextFile &input_ascii_text) {
-  NamelistEmulator result("star", CaseSensitivity::YES, ExceptionResponse::DIE, "Accepts data "
-                          "entry for a star in the sky");
+  NamelistEmulator result("star", CaseSensitivity::YES, ExceptionResponse::DIE, "Parameters for "
+                          "a star in the sky");
   result.addKeyword("planets", NamelistType::INTEGER, std::to_string(8));
   result.addKeyword("mass", NamelistType::REAL, std::to_string(1.0));
   result.addKeyword("brightness", NamelistType::REAL, std::to_string(-26.74));
@@ -118,17 +119,6 @@ might be more than a dozen keywords in the new input block.  Configuring the `Na
 unpacking it in this way will comprise the bulk of the code to write, and is intended to be as
 script-like as possible.
 
-## Displaying Keyword Documentation
-In addition to the means for developing new namelists, STORMM has a way to give each program a user
-manual with an interactive display through the command line.  With this system, running the program
-with no arguments or with `--help` and variations thereof will produce a summary of the program's
-declared purpose and a list of namelist conntrol block titles, with their own provided
-descriptions, in the terminal window.  Running the program with the title of one of the applicable
-namelists as the command line argument will produce a table of keywords in the namelist, complete
-with data types, default values, and descriptions.  All of this is done by accessing the configured
-`NamelistEmulator`, and works with many of the same methods used to display namelist contents and
-input choices when printing a report file at the end of a run.
-
 ## The Command Line is a Namelist, Too!
 The first place STORMM programs take in user information isn't the input file, though: it's the
 command line.  Command line arguments need documentation as well, and to address this need, STORMM
@@ -141,3 +131,83 @@ constructor call.  The developer may add original command line arguments by reac
 parser to edit the namelist stored inside, and even have the parser coordinate with other classes
 which look to the command line for information so as not to have keyword collisions or raise
 exceptions when one parser doesn't recognize a keyword to be used by another.
+
+## Displaying Keyword Documentation
+In addition to the means for developing new namelists, STORMM has a way to give each program a user
+manual with an interactive display through the command line.  With this system, running the program
+with no arguments or with `--help` and variations thereof will produce a summary of the program's
+declared purpose and a list of namelist conntrol block titles, with their own provided
+descriptions, in the terminal window.  Running the program with the title of one of the applicable
+namelists as the command line argument will produce a table of keywords in the namelist, complete
+with data types, default values, and descriptions.  All of this is done by accessing the configured
+`NamelistEmulator`, and works with many of the same methods used to display namelist contents and
+input choices when printing a report file at the end of a run.
+
+In order to add help messages for each keyword, we must go to the function wherein the namelist is
+being configured.  The help messages can , in fact, be included with each keyword's configuration,
+although the `addKeyword` method has many overloads and it can be unwieldy to include so much
+documentation in the space of a single function call.  STORMM also provides the `addHelp` method
+within the `NamelistEmulator` class to set the user documentation (more precisely, `addHelp` will
+modify the message after the constructor assigns a blank message).  The documentation for each
+keyword, building on the above code to configure `NamelistEmulator result`, could be:
+```
+  result.addHelp("planets", "The number of planets known to orbit the star");
+  result.addHelp("mass", "Estimated mass of the star, in units of solar masses");
+  result.addHelp("brightness", "Apparent magnitude of the star, as observed from Earth");
+  result.addHelp("name", "Common name given to the star");
+  result.addHelp("constellation", "Name of the constellation in which the star appears, or the "
+                 "constellation giving a direction in which to find the star");
+```
+
+Once the keyword descriptions are configured in the namelist, the developer needs to ensure that
+they can be conveyed to the user.  In STORMM programs, the convention is that running the program
+with no arguments (or, `--help`) will print a list of all relevant namelist control blocks, with
+general descriptions (for `&star`, the description was "Parameters for a star in the sky").
+Re-running the program with the title of a namelist as the command line argument will, in turn,
+print documentation on the keywords within.  But, how do we tell the system about our new namelist,
+`&star`?
+
+It's worthwhile to point out here that STORMM has a number of general-purpose control blocks for
+developers to mix and match the input.  To reiterate, a `NamelistEmulator` class object is not
+much, until it's configured.  That's why the convention is to encapsulate the configuration for
+each namelist control block into a specific function, e.g. `starInput` shown above, so that the
+documentation system can call on that function to produce a new `NamelistEmulator` object
+configured for the control block of interest.  We can then use a simple class to connect each
+configuring function with a namelist title string, and that is the `NamelistToken` class in
+**/stormm/home/src/Namelists/namelist_inventory.h**.  The class stores a function pointer and
+contains a method to execute that function on demand.  The documentation system can then read
+through its lists, match the user's request to the title of a namelist that it knows, and configure
+a new `NamelistEmulator` object with all of the relevant keywords.  It can then dive in and grab
+the documentation with the `NamelistEmulator` method `printHelp`.
+
+All we need to do is make the documentation system aware of our new control block.  To do that,
+we can make a vector of tokens the custom namelists, which in this case is just `&star`:
+```
+#include "/stormm/home/src/Namelists/namelist_inventory.h"
+
+using stormm::namelist::NamelistToken;
+
+  const std:vector<NamelistToken> tutorial_specific_namelists = {
+    NamelistToken(std::string("&star"), starInput);
+  };
+  clip.addCustomNamelists(tutorial_specific_namelists);
+```
+Note that the new namelist's token was added to the `CommandLineParser`.  This is so that the
+command line parser does not confuse the title of an actual namelist for some other argument that
+it is supposed to parse.  In fact, requests for namelist documentation will be intercepted before
+the call to `CommandLineParser::parseUserInput(argc, argv)`.  We use code from STORMM's `display`
+library:
+```
+#include "/stormm/home/src/Reporting/help_messages.h"
+
+using stormm::display::displayNamelistHelp;
+
+  if (displayNamelistHelp(argc, argv, {}, tutorial_specific_namelists) &&
+      clip.doesProgramExitOnHelp()) {
+    return 0;
+  }
+```
+All documentation will be printed to the terminal in the `displayNamelistHelp` function.  The
+`CommandLineParser` can be set to have the program continue after rendering the messages, but the
+default behavior is to exit and await the user's next attempt.
+

@@ -1,0 +1,23 @@
+&star
+  mass 1.07
+  name "Alpha Centauri A"
+  brightness 0.01
+  constellation Centaurus
+  planets 0
+&end
+
+&star
+  mass 0.91
+  name "Alpha Centauri B"
+  brightness 1.33
+  constellation Centaurus
+  planets 0
+&end
+
+&star
+  mass 0.12
+  name "Proxima Centauri"
+  brightness 10.43
+  constellation Centaurus
+  planets 3
+&end
