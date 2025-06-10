@@ -65,6 +65,7 @@ private:
 };
 ```
 
+## Configuring the Keywords
 In the example above, which will be expanded in the Tutorial III program, the namelist `&star` is
 configured into a `NamelistEmulator` by the `starInput` function.  The contents of that function,
 which again accomplishes the first and second stages of the overall process, could be as follows
@@ -93,6 +94,7 @@ NamelistEmulator starInput(const TextFile &input_ascii_text) {
 }
 ```
 
+## Optimizing Access with an Application-Specific Class
 The `starInput` function carried out the laborious task of sifting through the entire input file,
 or a portion of its lines if we had some intelligent way to put limits on the range.  This
 converted the potentially large block of character input into a developer-defined collection of
@@ -159,6 +161,7 @@ keyword, building on the above code to configure `NamelistEmulator result`, coul
                  "constellation giving a direction in which to find the star");
 ```
 
+## Telling the User What To Do
 Once the keyword descriptions are configured in the namelist, the developer needs to ensure that
 they can be conveyed to the user.  In STORMM programs, the convention is that running the program
 with no arguments (or, `--help`) will print a list of all relevant namelist control blocks, with
@@ -181,7 +184,7 @@ a new `NamelistEmulator` object with all of the relevant keywords.  It can then 
 the documentation with the `NamelistEmulator` method `printHelp`.
 
 All we need to do is make the documentation system aware of our new control block.  To do that,
-we can make a vector of tokens the custom namelists, which in this case is just `&star`:
+we can make a vector of tokens for the custom namelists, which in this case is just `&star`:
 ```
 #include "/stormm/home/src/Namelists/namelist_inventory.h"
 
@@ -192,22 +195,126 @@ using stormm::namelist::NamelistToken;
   };
   clip.addCustomNamelists(tutorial_specific_namelists);
 ```
-Note that the new namelist's token was added to the `CommandLineParser`.  This is so that the
-command line parser does not confuse the title of an actual namelist for some other argument that
-it is supposed to parse.  In fact, requests for namelist documentation will be intercepted before
-the call to `CommandLineParser::parseUserInput(argc, argv)`.  We use code from STORMM's `display`
-library:
+Above, we made a minimal example of the configuration function.  In order to get it into the
+reporting system, the function primitive needs to conform to that of other configuration functions
+in STORMM.  We can therefore add a couple of input parameters to make the form of `starInput` match
+that of functions like `dynamicsInput` in **/stormm/home/src/Namelists/nml_dynamics.h**.
+```
+NamelistEmulator starInput(const TextFile &input_ascii_text, int *start_line, bool *found_nml,
+                           ExceptionResponse policy = ExceptionResponse::DIE,
+                           WrapTextSearch wrap = WrapTextSearch::NO);
+```
+Note that the three of the inputs we added can be passed on to the `readInput` function rather than
+being created as local variables in `starInput` and hidden from the rest of the program.  Through
+the `NamelistToken` array, the new namelist's token is added to the `CommandLineParser`.  One task
+remains, which is to add the name / title of the control block to the parser's list of known
+namelists so that it does not confuse the title of an actual namelist for some other argument that
+it is supposed to interpret from the command line.  In fact, requests for namelist documentation
+will be intercepted before the call to `CommandLineParser::parseUserInput(argc, argv)`.  We use
+code from STORMM's `display` library to produce the documentation in the terminal for a user.  The
+entire code for configuring the command line parsing is given below:
 ```
 #include "/stormm/home/src/Reporting/help_messages.h"
 
 using stormm::display::displayNamelistHelp;
 
-  if (displayNamelistHelp(argc, argv, {}, tutorial_specific_namelists) &&
+  CommandLineParser clip("Tutorial_III", "An exercise in creating custom user control blocks with "
+                         "the native STORMM documentation system");
+  clip.addStandardApplicationInputs("-i");
+  NamelistEmulator *cmd_nml = clip.getNamelistPointer();
+  cmd_nml->addKeyword("-rating", NamelistType::INTEGER, std::string(""));
+  cmd_nml->addHelp("-rating", "Rate this tutorial on a scale of 1-10.");
+  const std::vector<NamelistToken> tutorial_specific_namelists = {
+    NamelistToken(std::string("&star"), starInput)
+  };
+  const std::vector<std::string> my_namelist_names = { "star" };
+  clip.addControlBlocks(my_namelist_names);
+  clip.addCustomNamelists(tutorial_specific_namelists);
+  if (displayNamelistHelp(argc, argv, my_namelist_names, tutorial_specific_namelists) &&
       clip.doesProgramExitOnHelp()) {
     return 0;
   }
+  clip.parseUserInput(argc, argv);
 ```
 All documentation will be printed to the terminal in the `displayNamelistHelp` function.  The
 `CommandLineParser` can be set to have the program continue after rendering the messages, but the
 default behavior is to exit and await the user's next attempt.
 
+## Results
+When the tutorial's "answer" program found in **/stormm/home/apps/Tutorial/tutorial_iii.cpp** is
+run with no command line arguments, or with `--help`, we get the following:
+```
+>> /stormm/build/apps/Tutorial/tutorial_iii.stormm.cuda
+
++-----------------------------------------------------------------------------+
+Tutorial_III: An exercise in creating custom user control blocks with the
+              native STORMM documentation system
+
+ Command line inputs [ type, default value ]:
++-----------------------------------------------------------------------------+
+ + --help  : [BOOLEAN, FALSE] List command line arguments with descriptions.
+
+ + -help   : [BOOLEAN, FALSE] List command line arguments with descriptions.
+
+ + -i      : [ STRING, 'stormm.in'] The primary input file, equivalent to
+             Amber's mdin.
+
+ + -rating : [INTEGER,  None] Rate this tutorial on a scale of 1-10.
+
+  Applicable namelist control blocks (re-run with one of these titles as the
+  command-line argument, in quotes if the leading '&' is included, for a full
+  description of all keywords in the namelist):
+  |
+  | Namelist            Description
+  | --------  --------------------------------
+  | &star     Parameters for a star in the sky
+```
+The command line arguments are listed, followed by a brief description of the control block that
+we can put in the input file.  If we run the program and request more information on the control
+block `&star`, we get:
+```
+>> /stormm/build/apps/Tutorial/tutorial_iii.stormm.cuda star
+
++-----------------------------------------------------------------------------+
+&star: Parameters for a star in the sky
+
+ Keywords [ type, default value ]:
++-----------------------------------------------------------------------------+
++ planets       : [INTEGER,      8] The number of planets known to orbit the
+                   star
+
+ + mass          : [   REAL,    1.0] Estimated mass of the star, in units of
+                   solar masses
+
+ + brightness    : [   REAL, -26.74] Apparent magnitude of the star, as
+                   observed from Earth
+
+ + name          : [ STRING,   None] Common name given to the star
+
+ + constellation : [ STRING,   None] Name of the constellation in which the
+                   star appears, or the constellation giving a direction in
+                   which to find the star
+```
+The types and default values of each keyword are displayed for the user, while the developer is
+only required to write the documentation in one place.  If we now run the program with an input
+file such as <a href="../assets/t3.in" download>this example</a>, the user input will be parsed
+and rendered in a convenient format for the rest of the C++ program.  The result is:
+```
+>> /stormm/build/apps/Tutorial/tutorial_iii.stormm.cuda -i t3.in
+
+There are 3 stellar entries in t3.in.
+
+    Star Name      Mass  Brightness Planets   Constellation
+----------------- ------ ---------- ------- -----------------
+ Alpha Centauri A   1.07     0.0100       0         Centaurus
+ Alpha Centauri B   0.91     1.3300       0         Centaurus
+ Proxima Centauri   0.12    10.4300       3         Centaurus
+```
+
+## Closing Remarks
+Customized user input is not something that a programming environment can ignore, and the diversity
+of methodologies in computational chemistry demands a robust and efficient conduit for new input
+directives in any program.  We hope that STORMM's methods, which require about 50 lines of
+conformal "overhead" to support any number of new keywords and convey their meaning to the user,
+will streamline the process of making new methods of professional quality using STORMM's advanced
+GPU kernels.
