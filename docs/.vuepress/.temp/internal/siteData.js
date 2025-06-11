@@ -1,4 +1,4 @@
-export const siteData = JSON.parse("{\"base\":\"/stormmsite/\",\"lang\":\"en-US\",\"title\":\"STORMM\",\"description\":\"Structure and TOpology Replica Molecular Mechanics\",\"head\":[],\"locales\":{}}")
+export const siteData = JSON.parse("{\"base\":\"/\",\"lang\":\"en-US\",\"title\":\"STORMM\",\"description\":\"Structure and TOpology Replica Molecular Mechanics\",\"head\":[],\"locales\":{}}")
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()
