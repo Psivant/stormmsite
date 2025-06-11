@@ -47,12 +47,13 @@ xfeatures:
              biomolecular target.
 
   - title: At Home in a Python Ecosystem
-    details: In a future release, all coordinate and topology objects will have the option to
+    details: In a future release, all coordinate and topology class objects will have the option to
              export or import their information to and from Python objects, connecting STORMM to a
              world of computer-aided chemistry.
 
   - title: Tutorials for Users
     details: Get started with STORMM's standalone programs and learn what it can do for you!
+    link: ./user-tutorials
     
   - title: Tutorials for Developers
     details: Study the high-level documentation to get your bearings in the vast, original code

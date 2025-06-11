@@ -280,7 +280,7 @@ block `&star`, we get:
 
  Keywords [ type, default value ]:
 +-----------------------------------------------------------------------------+
-+ planets       : [INTEGER,      8] The number of planets known to orbit the
+ + planets       : [INTEGER,      8] The number of planets known to orbit the
                    star
 
  + mass          : [   REAL,    1.0] Estimated mass of the star, in units of
@@ -298,7 +298,11 @@ block `&star`, we get:
 The types and default values of each keyword are displayed for the user, while the developer is
 only required to write the documentation in one place.  If we now run the program with an input
 file such as <a href="../assets/t3.in" download>this example</a>, the user input will be parsed
-and rendered in a convenient format for the rest of the C++ program.  The result is:
+and rendered in a convenient format for the rest of the C++ program.  Note that the tutorial
+program makes use of the `start_line` variable and the return value of `readInput` to step through
+the input file and record multiple `&star` namelist control blocks.  This is the more complete
+behavior available when using the standard form of a STORMM namelist configuration function.  The
+result is:
 ```
 >> /stormm/build/apps/Tutorial/tutorial_iii.stormm.cuda -i t3.in
 

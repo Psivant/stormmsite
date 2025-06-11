@@ -17,13 +17,14 @@ chemical structures out of thousands of atoms, and optimize compute-intensive as
 simulation.
 
 For more than a decade, computational science has been transformed by vectorized, general-purpose
-graphics processors (GPUs).  The degree of efficiency afforded by this end point of non-uniform
-memory access computing is staggering: a single consumer-grade card running on a few hundred watts
-can perform more calculations than megawatt supercomputers of the past built around single-core or
-multicore processors.  The cards also deliver a much greater degree of parallel scaling: a
-supercomputer in 2005 might have delieverd as little as 5-10% efficiency on a parallel simulation
-sprawling over hundreds of processors.  A GPU in 2025 may utilize upwards of 50% of its available
-floating point instructions when propagating the same simulation.
+graphics processors (GPUs).  The degree of efficiency afforded by this end point of
+[non-uniform memory access (NUMA)](https://en.wikipedia.org/wiki/Non-uniform_memory_access)
+computing is staggering: a single consumer-grade card running on a few hundred watts can perform
+more calculations than megawatt supercomputers of the past built around single-core or multicore
+processors.  The cards also deliver a much greater degree of parallel scaling: a supercomputer in
+2005 might have delieverd as little as 5-10% efficiency on a parallel simulation sprawling over
+hundreds of processors.  A GPU in 2025 may utilize upwards of 50% of its available floating point
+instructions when propagating the same simulation.
 
 In the modern computing environment, connecting scientists to the numbers in their calculations
 also means providing a transparent and simple way to transfer that information to the GPU to
@@ -138,7 +139,7 @@ any number of systems' coordinates can be stored in a synthesis of the same form
 array of coordinate objects continues to require 3*K* + 1 pointers.
 
 The purpose of a synthesis is to establish a framework for the GPU thread blocks to stride down
-contiguous arrays of data in order to perfomr the same calculation on every system in the series.
+contiguous arrays of data in order to perform the same calculation on every system in the series.
 The individual steps taken by the GPU are also planned by the CPU, often assembled into arrays of
 their own class objects, as described in the final section.
 

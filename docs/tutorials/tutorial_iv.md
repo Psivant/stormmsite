@@ -5,8 +5,9 @@ many molecular systems into a single program instance and have them communicate 
 subdivide into some common denominator of work units to stack problems together when the goal is
 to optimize GPU utilization.  First, we will need a topology class, which in STORMM is the
 `AtomGraph`.  Second, we require a means for storing structures, and also perhaps atomic velocities
-and force accumulators, and for that STORMM has several options.  To collect systems together and
-make them a super-problem amenable to GPU computing,
+and force accumulators, and for that STORMM has several options.  There are five distinct classes
+for storing structures in STORMM, and in this tutorial we will focus on the `PhaseSpace`.
+To collect systems together and make them a super-problem amenable to GPU computing,
 [topologies and coordinates collate into syntheses](../dev-philosophy#syntheses-not-just-arrays-of-topologies-or-coordinate-sets),
 as described elsewhere on the site.
 
@@ -94,7 +95,7 @@ because the various `const`-qualified integers and arrays of strings we are crea
 what such a class object would contain).  To hold atomic positions and also allocate space for
 force calculations, we will choose an object of the
 [`PhaseSpace`](../doxygen/classstormm_1_1trajectory_1_1PhaseSpace.html) class, and make a
-`std::vector` of these phase spaces to hold the initial coordinates of each system.
+`std::vector` of these objects to hold the initial coordinates of each system.
 ```
 
 using stormm::topology::AtomGraph;

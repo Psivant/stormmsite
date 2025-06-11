@@ -16,8 +16,8 @@ number of particles and steps.  The goal will be to reproduce GPU results with a
 implementation.
 
 ## Random Number Generation in STORMM
-STORMM makes use of the XOR-shift generators,
-[Xoroshiro128+ and Xoshiro256++](https://prng.di.unimi.it), to create streams of predictable
+STORMM makes use of the XOR-shift generators
+[Xoroshiro128+ and Xoshiro256++](https://prng.di.unimi.it) to create streams of predictable
 pseudo-random numbers based on state vectors with small memory requirements.  While useless for
 cryptography, the presence of "jump" and "long jump" methods in each generator makes them ideal for
 molecular simulations and other efforts in computational science.  The particular orbit of any of

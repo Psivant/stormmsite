@@ -201,6 +201,9 @@ know what a CUDA kernel is, much less a template implementation for a kernel.  H
 program will `#include` the header describing the launching function, as illustrated in the
 following diagram:
 
+<img src="../assets/templated_file_flow.png" alt="Templated Compilation"
+ style = "width:60% ; margin:auto">
+
 In the same way that a C++ program cannot `#include` CUDA code, in our case critical headers for
 templated kernels, the CUDA unit will not be able to accept templated inputs from the C++ compiled
 code object file.  Rather, we must convert all pointers to a specific type to pass through the
