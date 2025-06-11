@@ -248,6 +248,7 @@ object is just the one pointer, along with the array size.  For STORMM classes b
   wrappers, in the CUDA unit.
 - Kernels launched on the CUDA side will then operate on the class object's data, and the C++ side
   can download the results.
+
 The above procedure works because, even though the CUDA unit does not understand a templated form
 of some class object created by the C++ code (and vice-versa, the binary **.o** files were created
 by different compilers), both compilers were told how to make their own rendition of the templated
