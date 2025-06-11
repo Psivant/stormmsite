@@ -28,9 +28,18 @@ underlying device architecture.</p>
 <p>All implementations require testing to validate, and to build the upon existing features without
 breaking established methods.  STORMM offers a built-in unit testing feature reminiscent of
 <a href="https://github.com/catchorg/Catch2" target="_blank" rel="noopener noreferrer">catch2</a>.  This unit testing library offers a means to compare
-single values or arrays of values and analyze failures, offering clues such as a misscaled array
+single values or arrays of values and analyze failures, offering clues such as a miss scaled array
 indicating a misstated constant.  The checks include methods for confirming that certain code
 statements or inputs raise exceptions.</p>
+<h2 id="why-open-source" tabindex="-1"><a class="header-anchor" href="#why-open-source"><span>Why Open-Source?</span></a></h2>
+<p>Psivant Therapeutics releases STORMM as free and open-source software to bring together a community
+and advance molecular science.  Marketing the softare does not hold as much value as running an
+active development project that can invite collaborations with academics or other experts based on
+mutual goals.</p>
+<h2 id="python-integration-on-the-horizon" tabindex="-1"><a class="header-anchor" href="#python-integration-on-the-horizon"><span>Python Integration On the Horizon</span></a></h2>
+<p>In a future release, all coordinate and topology class objects will have the option to export or
+import their information to and from Python objects, connecting STORMM to a world of computer-aided
+chemistry.</p>
 </div></template>
 
 

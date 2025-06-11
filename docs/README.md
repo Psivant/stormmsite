@@ -35,7 +35,7 @@ xfeatures:
              speed and versatility in a modular dynamics engine that also accelerates innovation.
     link: ./stormm-md
 
-- title: Tutorials for Users
+  - title: Tutorials for Users
     details: Get started with STORMM's standalone programs and learn what it can do for you!
     link: ./user-tutorials
 
