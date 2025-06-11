@@ -18,14 +18,14 @@ between the two resources.  For adept developer, the tutorial will also demonstr
 of implementing templated GPU kernels in the context of a C++ program and some fundamental truths
 about GPU computing strategies.
 
-## [Advanced Tutorial: A Random Walk Simulator Written in STORMM](./tutorials/tutorial_ii)
+## [A Random Walk Simulator Written in STORMM](./tutorials/tutorial_ii)
 In order to present the principles and methods behind molecular dynamics and docking programs
 written with STORMM, a small program has been written to carry out random walks with particles on
 a two-dimensional surface.  Useful features of the primary memory management class, random number
 generation, fixed-precision arithmetic, and exception reporting will be covered.  The complete
 program comprises some 600 lines of C++ and 60 lines of CUDA code.
 
-## [Advanced Tutorial: Creating Custom User Input Blocks](./tutorials/tutorial_iii)
+## [Creating Custom User Input Blocks](./tutorials/tutorial_iii)
 Programs must accept user input in order to work on real problems, and custom programs may need to
 understand unique commands.  STORMM has facilities for tailoring command line input and input
 file control blocks to the developer's needs.  The features include a system for adding help
