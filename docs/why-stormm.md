@@ -36,3 +36,14 @@ breaking established methods.  STORMM offers a built-in unit testing feature rem
 single values or arrays of values and analyze failures, offering clues such as a misscaled array
 indicating a misstated constant.  The checks include methods for confirming that certain code
 statements or inputs raise exceptions.
+
+## Why Open-Source?
+Psivant Therapeutics releases STORMM as free and open-source software to bring together a community
+and advance molecular science.  Marketing the softare does not hold as much value as running an
+active development project that can invite collaborations with academics or other experts based on
+mutual goals.
+
+## Python Integration On the Horizon
+In a future release, all coordinate and topology class objects will have the option to export or
+import their information to and from Python objects, connecting STORMM to a world of computer-aided
+chemistry.

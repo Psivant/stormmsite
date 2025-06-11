@@ -23,12 +23,6 @@ xfeatures:
              into one calculation for superior scaling as well as programming advantages.
     link: ./why-stormm
 
-  - title: Why Open Source?
-    details: Psivant Therapeutics releases STORMM as free and open-source software to bring
-             together a community and advance molecular science.  Marketing the softare does not
-             hold as much value as running an active development project that can invite
-             collaborations with academics or other experts based on mutual goals.
-
   - title: Development Philosophy
     details: A programming style that harnesses the most practical improvements in C++ without
              bewildering programmers familiar with C, building a class and API structure that makes
@@ -41,17 +35,7 @@ xfeatures:
              speed and versatility in a modular dynamics engine that also accelerates innovation.
     link: ./stormm-md
 
-  - title: Advanced Ligand Screening
-    details: STORMM's batching is unmatched even for small molecule simulations, staging tens of
-             thousands of energy calculations in free space or hundreds in the context of a
-             biomolecular target.
-
-  - title: At Home in a Python Ecosystem
-    details: In a future release, all coordinate and topology class objects will have the option to
-             export or import their information to and from Python objects, connecting STORMM to a
-             world of computer-aided chemistry.
-
-  - title: Tutorials for Users
+- title: Tutorials for Users
     details: Get started with STORMM's standalone programs and learn what it can do for you!
     link: ./user-tutorials
     
