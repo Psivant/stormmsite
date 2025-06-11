@@ -51,12 +51,12 @@ using stormm::testing::StopWatch;
   const int file_read_tm  = the_clock.addCategory("File Reading");
   const int chem_work_tm  = the_clock.addCategory("Chemical Features Detection");
   const int excl_work_tm  = the_clock.addCategory("Non-bonded Exclusion Detection");
-  const int basic_nonb_tm = the_clock.addCategory("Basic Non-bonded Evaulation");
-  const int clean_nonb_tm = the_clock.addCategory("Non-bonded Evaulation Cleanup");
-  const int excl_nonb_tm  = the_clock.addCategory("Excluded Non-bonded Evaulation");
+  const int basic_nonb_tm = the_clock.addCategory("Basic Non-bonded Evaluation");
+  const int clean_nonb_tm = the_clock.addCategory("Non-bonded Evaluation Cleanup");
+  const int excl_nonb_tm  = the_clock.addCategory("Excluded Non-bonded Evaluation");
 ```
 When we unpack topologies and manipulate data in a coordinate object, it is important to know that
-the results are correct, and for that we need a unit testing framework.  This is an oppotunity to
+the results are correct, and for that we need a unit testing framework.  This is an opportunity to
 showcase STORMM's native unit testing features.  Unit tests are collected and tracked within a
 global object of the [`CheckList`](../doxygen/classstormm_1_1testing_1_1CheckList.html) class while
 certain tolerances for the tests and their display is tracked using the
@@ -147,7 +147,7 @@ using stormm::testing::RelationalOperator;
   const bool all_match = (failures_pt_a == gbl_test_results.getOverallFailureCount());
 ```
 In the above, we are storing a record of the number of failures before checks on the system sanity,
-(anticipating that future additions to the program might insert othere unit tests), then comparing
+(anticipating that future additions to the program might insert other unit tests), then comparing
 it to the number of failures after the sanity checks to ensure that all of them have passed.  We
 could also have done this by declaring a new section for these specific tests:
 ```
@@ -248,7 +248,7 @@ objects of this class can be created for each topology as shown below:
 ```
 The `LocalExclusionMask` does not participate in the current implicit solvent molecular dynamics /
 energy minimization implementation. (It was created later, after some realizations and further
-research.) It will be used in the forthcoming implmentation for explicit solvent molecular
+research.) It will be used in the forthcoming implementation for explicit solvent molecular
 simulations in periodic boundary conditions.
 
 ## A Basic Electrostatic Calculation
@@ -282,14 +282,14 @@ using stormm::trajectory::PhaseSpaceReader;
 ```
 
 We have already covered one qualification to the interactions, that such that the pair is not
-connected by three bonds or fewer (so as to participate in some valence term).  
+connected by three bonds or fewer (so as to participate in some valence term).
 
 The first qualification to the computation involves how to deal with periodicity.  The `PhaseSpace`
 objects already created in our program have a member variable `unit_cell` (use the accessor
 `UnitCellType PhaseSpace::getUnitCellType()`, or look at the `unit_cell` member variable in the
 `PhaseSpaceReader` or `PhaseSpaceWriter` class abstracts).  We can use that to determine whether
 to consider periodic images of the system, as long as we have some convention for computing the
-disstance between particles and their interaction in a periodic setting.  Let us take the "minimum
+distance between particles and their interaction in a periodic setting.  Let us take the "minimum
 image convention," that the distance between two particles is the smallest possible distance among
 all images.  We can use the `imageCoordinates` function and feed it the `unit_cell` member
 variable:
@@ -314,7 +314,7 @@ using stormm::structure::ImagingMethod;
 ```
 In the tutorial program **/stormm/home/apps/Tutorial/tutorial_iv.cpp**, the evaluation of the unit
 cell performed inside of is hard-coded to move it out of the inner loop.  The `imageCoordinates`
-function is tempalted and overloaded to deal with single values along each Cartesian axis or arrays
+function is templated and overloaded to deal with single values along each Cartesian axis or arrays
 of values, batching the unit cell evaluation but at the expense of greater complexity to store the
 displacements of many particles interacting.
 
@@ -330,7 +330,7 @@ exclusion test added (note that the function returns TRUE if the two particle's 
 interact:
 ```
   double masked_elec_nrg = 0.0;
-  
+
   <... outer loops as above ...>
       for (int j = 0; j < i; j++) {
         if (! testExclusion(ilmr, j, i)) {
@@ -375,7 +375,7 @@ with in the first place.  If the topology and its `NonbondedKit` abstract is wro
 wouldn't see the effect, but if the `LocalExclusionMask` had a but this test would be likely to
 reveal it.  The topology class emits a number of different abstracts, with minimal overlap in terms
 of the pointers and length constants they offer.  We can use the abstract (already taken in the
-code above) for non-bonded intetractions and then loop through its contents to accumulate and then
+code above) for non-bonded interactions and then loop through its contents to accumulate and then
 subtract the excluded interactions from `basic_elec_nrg` above.  The one abstract of the
 `LocalExclusionMask` will help to get the relevant pointers where they are needed, and it is a
 convention in STORMM CPU code, "access all involved class objects with accessor functions, or take
@@ -458,15 +458,15 @@ tutorial program helps to show the performance of the exclusion calculation.
  |         Category Name          | Samples   Total    Mean    Standard   Minimum  Maximum |
  |                                |          Time, s  Time, s  Deviation  Time, s  Time, s |
  +--------------------------------+--------------------------------------------------------+
- | Basic Non-bonded Evaulation    |     100   0.7889   0.0079     0.0031   0.0068   0.0229 |
- | Non-bonded Evaulation Cleanup  |     100   0.0338   0.0003     0.0002   0.0003   0.0010 |
- | Excluded Non-bonded Evaulation |     100   1.1838   0.0118     0.0043   0.0102   0.0314 |
+ | Basic Non-bonded Evaluation    |     100   0.7889   0.0079     0.0031   0.0068   0.0229 |
+ | Non-bonded Evaluation Cleanup  |     100   0.0338   0.0003     0.0002   0.0003   0.0010 |
+ | Excluded Non-bonded Evaluation |     100   1.1838   0.0118     0.0043   0.0102   0.0314 |
  +--------------------------------+--------------------------------------------------------+
 ```
 While it is faster in this case to evaluate all interactions and then trim away the exclusions,
 even with our rudimentary system for tracking them, this is just the electrostatic energy
 evaluation.  To evaluate forces would be much more laborious, and to add a van-der Waals potential
-on top of that brings the relative cost of the exclusion calculation down by a geat deal, and in
+on top of that brings the relative cost of the exclusion calculation down by a great deal, and in
 our developmental GPU code for periodic boundaries we are finding that the cost of evaluating the
 exclusion status of each pair is on the order of 5% of the total cost of the nested loop over all
 neighbor list pairs.  While the tutorial program will yield very similar answers for the total
@@ -481,11 +481,11 @@ practice in molecular simulations.
 # Creating a Synthesis of All Systems
 With the systems read in and correspondence established, the masterstroke is create a *synthesis*
 of the coordinates and topologies.  The coordinate synthesis is the
-[`PhaseSapceSynthesis`](../doxygen/classstormm_1_1synthesis_1_1PhaseSpaceSynthesis.html), while the
-topopology synthesis is the
+[`PhaseSpaceSynthesis`](../doxygen/classstormm_1_1synthesis_1_1PhaseSpaceSynthesis.html), while the
+topology synthesis is the
 [`AtomGraphSynthesis`](../doxygen/classstormm_1_1synthesis_1_1AtomGraphSynthesis.html).  The
 constructor for the `PhaseSpaceSynthesis` calls for an array of `PhaseSpace` objects and an array
-of *pointers* to their repective topologies.  Note: the tutorial program will abort with an error
+of *pointers* to their respective topologies.  Note: the tutorial program will abort with an error
 if systems with mismatched boundary conditions are supplied in the same run.  All systems must
 either have no boundary conditions, or they must all have periodic boundary conditions.  Barring
 that mismatch, it's easy enough to create the synthesis:

@@ -17,7 +17,7 @@ large problems are not big enough to utilize the entirety of the most powerful c
 Unlike other codes, STORMM stages multiple calculations in the same program instance, scaling to
 any size of card, present and future, by batching the problems.  The required commonalities among
 the calculations are minimal, such as that they all take similar boundary conditions or the same
-thermostating method and time step.  
+thermostating method and time step.
 
 ## Built-in Facilities for Taking Your Algorithms to the GPU
 Without calling an external library like Thrust, STORMM provides a single `Hybrid` class for
@@ -33,7 +33,7 @@ underlying device architecture.
 All implementations require testing to validate, and to build the upon existing features without
 breaking established methods.  STORMM offers a built-in unit testing feature reminiscent of
 [catch2](https://github.com/catchorg/Catch2).  This unit testing library offers a means to compare
-single values or arrays of values and analyze failures, offering clues such as a misscaled array
+single values or arrays of values and analyze failures, offering clues such as a miss scaled array
 indicating a misstated constant.  The checks include methods for confirming that certain code
 statements or inputs raise exceptions.
 
