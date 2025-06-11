@@ -11,7 +11,7 @@ It starts with one array.  Constants can be sent to the GPU as kernel launch par
 results from those kernels must, in general, be written to memory that the GPU can access (e.g. its
 on-board memory, or
 [memory on the host allocated in such a way that the GPU can see it](https://developer.download.nvidia.com/compute/DevZone/docs/html/C/doc/html/group__CUDART__MEMORY_g15a3871f15f8c38f5b7190946845758c.html).  The contents of the array can then be downloaded by the CPU in the same way that the CPU
-can upload data to the device.  STORMM encapsulates memoory management through the templated
+can upload data to the device.  STORMM encapsulates memory management through the templated
 [`Hybrid` C++ class](../doxygen/classstormm_1_1card_1_1Hybrid.html).
 
 The first step in writing the program is to recognize the GPU.  STORMM provides several classes to
@@ -95,7 +95,7 @@ bin.  As implied by the variables `gpu_asgn_time` and `gpu_prep_time`, each cate
 tracking is given a unique integer value, which can also be used to index the right bin rather than
 a search over name strings.
 
-Aside from the tivial array which was allocated to force the GPU to engage, we can now create a
+Aside from the trivial array which was allocated to force the GPU to engage, we can now create a
 more substantial array and manipulate its contents.  The
 [`Hybrid`](classstormm_1_1card_1_1Hybrid.html) class will only accept template types of familiar,
 elemental types such as `int`, `double`, `char`, or `bool`.  It is not like the C++ Standard
@@ -136,7 +136,7 @@ then ping-pong between two limits.
   }
 ```
 
-## Abstracts: Pointers to the Data 
+## Abstracts: Pointers to the Data
 This is an opportunity to demonstrate the C++ to C, C to CUDA strategy that guides much of STORMM's
 development.  C++ made big improvements in its 2011 update, among them compilers getting smart
 about seeing the subscript array operator on `std::vector` objects and optimizing the pointer
@@ -193,7 +193,7 @@ functions in the header files where the function is first mentioned, STORMM take
 creating a separate **.tpp** file for the implementation as opposed to the declaration).  The
 **.cu** file will contain the implementation of a function to take an array of a given data type
 and compute the sum.  For complete generality, we would again need to allow that the sum be
-computed in a distnct data type, longer in format than the type of the array elements, but we can
+computed in a distinct data type, longer in format than the type of the array elements, but we can
 assume the same type for each in this example.  The C++ program cannot be told to `#include` any
 CUDA template implementations--the function within the **.cu** file will take an array and then
 delegate to some templated form of a CUDA kernel that only the CUDA unit knows about.  C++ doesn't
@@ -225,7 +225,7 @@ automatic, although the tutorial avoids this shorthand for clarity.) A summary o
   const int* devc_xi_ptr = xferable_integers.data(HybridTargetLevel::DEVICE);
   const void* vdevc_xi_ptr = reinterpret_cast<const void*>(devc_xi_ptr);
   int* sum_ptr = sum_of_xi.data(HybridTargetLevel::DEVICE);
-  void* vsum_ptr = reinterpret_cast<void*>(sum_ptr);  
+  void* vsum_ptr = reinterpret_cast<void*>(sum_ptr);
 ```
 
 All that remains on the C++ side is to stage the data on the GPU and then issue a call to the
@@ -262,7 +262,7 @@ are all cast to void and the `restoreType` class method takes data type indices 
 
 ## The CUDA Side of Things
 The code for our CUDA unit is not complex.  It must define an implementation for the wrapper
-function `wrapTheSummationLaunch`, which branches over various recognized arithemtic types to be
+function `wrapTheSummationLaunch`, which branches over various recognized arithmetic types to be
 summed:
 ```
 extern void wrapTheSummationLaunch(const void* vdata, const size_t n, void* vresult,
@@ -323,7 +323,7 @@ function and has a precision of microseconds.  To summarize:
   const int gpu_asgn_tm = the_clock.addCategory("Assign a GPU");
   const int gpu_prep_tm = the_clock.addCategory("Prep the GPU");
   const int int_experiment_tm = the_clock.addCategory("Experiment with integers");
-  
+
   // Assign time since last measurement based on category name (slower, use only in high-level
   // procedures)
   the_clock.assignTime("Assign a GPU");
@@ -336,7 +336,7 @@ function and has a precision of microseconds.  To summarize:
   // or call with no argument)
   the_clock.assignTime();
   the_clock.assignTime(0);
-  
+
   // Print the timings results (precision optional)
   the_clock.printResults();
 ```

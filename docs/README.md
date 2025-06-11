@@ -1,7 +1,7 @@
 ---
 home: true
 title: Home
-heroImage: 
+heroImage:
 actions:
   - text: Get Started
     link: /get-started.html
@@ -29,16 +29,16 @@ xfeatures:
              it easy to find where the intense math happens to translate equations into molecular
              structures.  The developers of STORMM strive for a clean and accessible tool kit.
     link: ./dev-philosophy
-    
+
   - title: A Radical New Approach to Molecular Dynamics
-    details: Unique algorithms and groudbreaking data structures come together for exceptional
+    details: Unique algorithms and groundbreaking data structures come together for exceptional
              speed and versatility in a modular dynamics engine that also accelerates innovation.
     link: ./stormm-md
 
 - title: Tutorials for Users
     details: Get started with STORMM's standalone programs and learn what it can do for you!
     link: ./user-tutorials
-    
+
   - title: Tutorials for Developers
     details: Study the high-level documentation to get your bearings in the vast, original code
              base.  Learn what the libraries have to offer, and what you would need to build your
@@ -50,10 +50,10 @@ xfeatures:
              are described in a manner that links back to the high-level documentation on this
              website.  Any further questions can be put to the principal developers.
     link: ./doxygen/index.html
-    
+
 footer: Copyright 2023-2025 | Psivant Therapeutics | MIT Licensed
 ---
-<!-- 
+<!--
 This is the content of home page. Check [Home Page Docs][default-theme-home] for more details.
 
 [default-theme-home]: https://vuejs.press/reference/default-theme/frontmatter.html#home-page -->

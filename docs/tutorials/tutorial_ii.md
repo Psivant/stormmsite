@@ -74,7 +74,7 @@ using stormm::data_types::ullint2;
 class RandomWalk {
 public:
   RandomWalk(int coordinate_count_in, int bits_in = 24, int prng_seed_in = 1083674,
-             double fluctation_in = 1.0,
+             double fluctuation_in = 1.0,
              RandomNumberKind fluctuation_style_in = RandomNumberKind::GAUSSIAN,
              const GpuDetails &gpu = null_gpu);
 
@@ -226,8 +226,8 @@ C++, but to shed the parts of a C++ class that a CUDA kernel cannot incorporate.
 class mechanics and abstracts laid down, the core functionality of the `RandomWalk` class must be
 encapsulated in the constructor and a public member function to drive the simulation forward.  The
 minimal constructor will call a `private` member function `allocate` to perform the `Hybrid`
-allocations described above, then seed the random number gnererator state vectors on the CPU or, if
-applicable, on the GPU.  Note that the code paths differ absed on whether the GPU mode is compiled,
+allocations described above, then seed the random number generator state vectors on the CPU or, if
+applicable, on the GPU.  Note that the code paths differ based on whether the GPU mode is compiled,
 and that the GPU kernel launcher `initXoroshiro128p` will download the results from the GPU so that
 the CPU and GPU both have the same state vectors when the function returns.  Because `Hybrid`
 object data is initialized to zero, a single cycle of the public member function used to advance
@@ -273,7 +273,7 @@ There are no interactions between the particles. (Apologies if decoupling the *x
 dimensions, rather than using a polar coordinate system based on the stated step size, is incorrect
 from a theoretical perspective--the purpose is not a formal investigation of random walk diffusion
 but to present C++ and CUDA mechanics.) We create a temporary `Xoroshiro128pGenerator` and use its
-`setState` method to instantly place it on tracj with a given particle's pseudo-random stream.  The
+`setState` method to instantly place it on trajectory with a given particle's pseudo-random stream.  The
 state vectors in `rng_states` are what matters: the `Xoroshiro128pGenerator` class object is just
 there to provide its methods for creating new random numbers and making the state vector tick
 forward.  After the requested number of steps, we will extract the modified state vector from the
@@ -469,7 +469,7 @@ using namespace tutorial;
   rw.advance(step_count, HybridTargetLevel::HOST);
 #ifdef STORMM_USE_HPC
   rw.advance(step_count, HybridTargetLevel::DEVICE, gpu);
-#endif  
+#endif
 ```
 
 ## Making It Compile
