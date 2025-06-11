@@ -198,8 +198,8 @@ assume the same type for each in this example.  The C++ program cannot be told t
 CUDA template implementations--the function within the **.cu** file will take an array and then
 delegate to some templated form of a CUDA kernel that only the CUDA unit knows about.  C++ doesn't
 know what a CUDA kernel is, much less a template implementation for a kernel.  However, the C++
-program will `#include` the header describing the launching function, as illustrated in the
-following diagram:
+program will `#include` the header describing the launching function, as illustrated with blue
+arrows in the following diagram:
 
 <img src="../assets/templated_file_flow.png" alt="Templated Compilation"
  style = "width:60% ; margin:auto">
@@ -235,6 +235,29 @@ C++ compiled code object, even though a kernel cannot).  The relevant code:
 xferable_integers.upload();
 wrapTheSummationLaunch(vdevc_xi_ptr, nxi, vsum_ptr, int_type_index, gpu);
 ```
+
+In the example above, we used a single `Hybrid` object as an example of STORMM's conventions for
+transmitting templated data from the C++ layer to the CUDA layer.  The "abstract" of the `Hybrid`
+object is just the one pointer, along with the array size.  For STORMM classes built on templated
+`Hybrid` objects, the method is then:
+- Write a class method to emit an abstract with all pointers cast to `void*`
+- Write a class method to accomplish the inverse: restoring the data type(s) of each pointer
+- Feed the class header file to both the C++ and CUDA implementation files.
+- Invoke the first method to create the "de-templated" abstract on the C++ side, then "send it to
+  the CUDA side" by submitting it as an input argument to some function, e.g. one of the kernel
+  wrappers, in the CUDA unit.
+- Kernels launched on the CUDA side will then operate on the class object's data, and the C++ side
+  can download the results.
+The above procedure works because, even though the CUDA unit does not understand a templated form
+of some class object created by the C++ code (and vice-versa, the binary **.o** files were created
+by different compilers), both compilers were told how to make their own rendition of the templated
+class itself, and both can interpret a specifically typed instance of the class, e.g. `void*`.  The
+`AtomGraph` class has templated abstracts, but it enumerates the various data formats (`float` and
+`double`) that these abstracts can take, and with a particular format passed to each function on
+the CUDA side we do not need the above workflow.  An extreme example of the "cast to `void*` and
+then restore" paradigm can be seen in the
+[`CellGrid` class](../doxygen/classstormm_1_1energy_1_1CellGrid.html), where four unique data types
+are all cast to void and the `restoreType` class method takes data type indices for all of them.
 
 ## The CUDA Side of Things
 The code for our CUDA unit is not complex.  It must define an implementation for the wrapper
