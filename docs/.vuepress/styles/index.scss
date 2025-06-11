@@ -64,6 +64,17 @@
   }
   // --- End of Code Block Text Color Fix for Light Mode ---
 
+
+  // --- Override styles ---
+  a[rel~="noopener"]:not([href]) {
+    text-decoration: none !important;
+  }
+
+  a::after {
+    content: none !important;
+}
+  // --- End of Override styles ---
+
   // Code tab title color
   --vp-c-code-tab-title: var(--code-c-text, rgb(255, 255, 255 / 90%));
   // Code tab background

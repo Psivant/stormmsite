@@ -1,4 +1,4 @@
-import comp from "/Users/kushagra.srivastava/Documents/GitHub/StormmSite/docs/.vuepress/.temp/pages/contents.html.vue"
+import comp from "/Users/thomas.schultz/Documents/code/stormmsite/docs/.vuepress/.temp/pages/contents.html.vue"
 const data = JSON.parse("{\"path\":\"/contents.html\",\"title\":\"Table of Contents\",\"lang\":\"en-US\",\"frontmatter\":{},\"headers\":[],\"git\":{\"updatedTime\":1747168965000},\"filePathRelative\":\"contents.md\"}")
 export { comp, data }
 
