@@ -1,7 +1,6 @@
 # Molecular Dynamics in STORMM
 The executables **dynamics.stormm** and **dynamics.stormm.cuda** are compiled with the build: each
-engine works in the manner of backend programs distributed with AMBER, NAMD, or GROMACS, handling
-the entire dynamics cycle from topology and input coordinate reading to trajectory writing.  
+engine works in the manner of backend programs distributed with AMBER, NAMD, or GROMACS, handling the entire dynamics cycle from topology and input coordinate reading to trajectory writing.  
 
 ## Implicit Solvent Dynamics
 STORMM can apply any of the AMBER Generalize Born models to mimic the reaction field of aqueous
@@ -121,8 +120,9 @@ Langevin) thermostats for each system maintain the temperature at `tempi` until 
 start of temperature evolution) steps have passed, then implement a linear shift towards the
 equilibrium temperature `temp0` to be maintained after `tevo_end` steps have passed.
 
-For convenience, the above input file is <a href="./assets/dyna.in" download>here</a>.  With the
-relevant coordinate and topologies wrapped inside the `&files` namelist, the command to run the
+For convenience, the above input file is
+<a href="https://storage.googleapis.com/stomm-psivant-com-files/dyna.in" download>here</a>.  With
+the relevant coordinate and topologies wrapped inside the `&files` namelist, the command to run the
 input with the GPU-enabled engine is:
 
 ```
@@ -148,15 +148,15 @@ STORMM can run dynamics with starting structures and molecular mechanics paramet
 is not yet ready and the only trajectory output format is AMBER's .crd (`8.3f`) ASCII output.
 
 ## Example Output
-This <a href="./assets/dyna.m" download>report</a> is produced by **dynamics.stormm.cuda**
-running the above input.  It is the equivalent of `mdout` from the AMBER sander or pmemd engines,
-displaying similar readouts from the energy decomposition albeit in a different, more compact
-format that assumes the user would like such information tabulated.  The output from STORMM
-collects results from all systems which were run as part of the same calculation.  While it might
-not be sensible to run the example inputs and compare them at once, the possibilities are clear.
-The report file is a script that can be read by a human, or submitted as input to Matlab or Octave.
-All information from the standard MD diagnostics is then available in a matrix package for further
-analysis.
+This <a href="https://storage.googleapis.com/stomm-psivant-com-files/dyna.m" download>report</a> is
+produced by **dynamics.stormm.cuda** running the above input.  It is the equivalent of `mdout`
+from the AMBER sander or pmemd engines, displaying similar readouts from the energy decomposition
+albeit in a different, more compact format that assumes the user would like such information
+tabulated.  The output from STORMM collects results from all systems which were run as part of the
+same calculation.  While it might not be sensible to run the example inputs and compare them at
+once, the possibilities are clear.  The report file is a script that can be read by a human, or
+submitted as input to Matlab or Octave.  All information from the standard MD diagnostics is then
+available in a matrix package for further analysis.
 
 Some notes:
 * The program will warn the user that atomic numbers are being inferred from masses.  This is

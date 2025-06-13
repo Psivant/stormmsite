@@ -18,9 +18,10 @@ most STORMM apps can run with:
 An example of possible user input is given [elsewhere on the website](../stormm-md).  This
 tutorial will explore some of the more sophisticated methods available in STORMM.
 
-<a href="../assets/run_dynamics.sh" download>A script to run the entire set of simulations is
-available here.</a> The script depends on two environment variables which may already be set as
-part of the STORMM build process, but the script will prompt the user if they are unset.
+<a href="https://storage.googleapis.com/stomm-psivant-com-files/run_dynamics.sh" download>A script
+to run the entire set of simulations is available here.</a> The script depends on two environment
+variables which may already be set as part of the STORMM build process, but the script will prompt
+the user if they are unset.
 
 ## The `&files` Control Block
 Most STORMM input will begin with a namelist control block such as:
@@ -206,10 +207,10 @@ run in the matrix algebra package of choice with the `varname` keyword.  This ca
 loading the results from multiple simulation sets in a single matrix algebra program session.
 
 ## Results
-<a href="../assets/dynamics_tutorial_result.m">Results of the exmaple script can be found here.</a>
-The exact energies may vary depending on the CPU or GPU architecture used to run the test, but for
-a given machine (and also identical hardware configurations) the results should be reproducible
-from run to run.
+<a href="https://storage.googleapis.com/stomm-psivant-com-files/dynamics_tutorial_result.m">Results
+of the exmaple script can be found here.</a> The exact energies may vary depending on the CPU or
+GPU architecture used to run the test, but for a given machine (and also identical hardware
+configurations) the results should be reproducible from run to run.
 
 A few notes on the output:
 - The final temperatures of the various systems (four Trp-cage simulations and a handful of amino
