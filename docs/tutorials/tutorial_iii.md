@@ -57,7 +57,7 @@ public:
   int getPlanetCount() const;
   double getMass() const;
   double getBrightness() const;
-  
+
 private:
   int planet_count;   // Number of planets in orbit
   double mass;        // Mass in units of solar masses
@@ -138,7 +138,7 @@ exceptions when one parser doesn't recognize a keyword to be used by another.
 In addition to the means for developing new namelists, STORMM has a way to give each program a user
 manual with an interactive display through the command line.  With this system, running the program
 with no arguments or with `--help` and variations thereof will produce a summary of the program's
-declared purpose and a list of namelist conntrol block titles, with their own provided
+declared purpose and a list of namelist control block titles, with their own provided
 descriptions, in the terminal window.  Running the program with the title of one of the applicable
 namelists as the command line argument will produce a table of keywords in the namelist, complete
 with data types, default values, and descriptions.  All of this is done by accessing the configured

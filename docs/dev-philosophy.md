@@ -22,7 +22,7 @@ graphics processors (GPUs).  The degree of efficiency afforded by this end point
 computing is staggering: a single consumer-grade card running on a few hundred watts can perform
 more calculations than megawatt supercomputers of the past built around single-core or multicore
 processors.  The cards also deliver a much greater degree of parallel scaling: a supercomputer in
-2005 might have delieverd as little as 5-10% efficiency on a parallel simulation sprawling over
+2005 might have delivered as little as 5-10% efficiency on a parallel simulation sprawling over
 hundreds of processors.  A GPU in 2025 may utilize upwards of 50% of its available floating point
 instructions when propagating the same simulation.
 
@@ -150,7 +150,7 @@ from 500 to a million atoms, STORMM breaks down all problems into the smallest c
 lowest common denominator.  In our
 [paper](https://pubs.aip.org/aip/jcp/article/161/3/032501/3303330/STORMM-Structure-and-topology-replica-molecular),
 these elements are termed *work units*.  One of the most intricate examples of work units in the
-code base, dicussed in the introductory publication, is the valence work unit, with several classes
+code base, discussed in the introductory publication, is the valence work unit, with several classes
 devoted to its construction.  Other work units may be tuples of even bit-packed arrays of
 `unsigned int`.  Work units are instructions to GPU kernels, detailing what information to access
 in order to perform the next iteration of the kernel's main loop, whether that is to evaluate a
