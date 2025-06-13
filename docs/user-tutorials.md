@@ -3,7 +3,7 @@
 STORMM's general-purpose libraries contain hundreds of thousands of line of code for molecular
 simulations.  Its compiled applications draw upon this common core.
 
-## Implicit Solvent Molecular Dynamics in STORMM
+## [Implicit Solvent Molecular Dynamics in STORMM](./tutorials/tutorial_md)
 STORMM can run molecular dynamics but is currently limited to implicit solvent models. (Code for
 simulations with explicit solvent molecules in periodic boundary conditions is nearing completion.)
 
