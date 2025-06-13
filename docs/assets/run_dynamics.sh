@@ -22,7 +22,7 @@ cat > dynamics.in << EOF
          x_kind AMBER_CRD
          -label trpcage -n 4 }
   -t dynamics.xscript
-  -o report.m
+  -o dynamics_tutorial_result.m
 &end
 
 &minimize
