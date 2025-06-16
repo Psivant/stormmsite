@@ -7,7 +7,7 @@ simulations.  Its compiled applications draw upon this common core.
 STORMM can run molecular dynamics but is currently limited to implicit solvent models. (Code for
 simulations with explicit solvent molecules in periodic boundary conditions is nearing completion.)
 
-## Conformer Generation in STORMM
+## [Conformer Generation in STORMM](./tutorials/tutorial_conf)
 STORMM's conformer generator leverages its native chemical perception algorithms to detect
 rotatable bonds, design a sampling protocol to explore the accessible geometric space, and then
 perform energy minimization *en masse* on the GPU.  The best scoring conformers that pass a mutual
