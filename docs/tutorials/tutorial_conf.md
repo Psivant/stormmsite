@@ -8,7 +8,7 @@ provisional exploration of the combinatorial rotamer possibilities, then uses it
 mechanics batching to perform thousands of independent energy minimizations on the GPU.
 
 The procedure described in this tutorial may be implemented by running
-<a href="https://storage.googleapis.com/stomm-psivant-com-files/run_dynamics.sh" download>this
+<a href="https://storage.googleapis.com/stormm-psivant-com-files/run_dynamics.sh" download>this
 script.</a> Two environment variables are required, but may already be set as a part of the
 STORMM build procedure.  The script will prompt the user if the variables are unset.
 
@@ -110,7 +110,7 @@ As with many other keywords in STORMM's enhanced namelist input, `sdf_item` is r
 
 ## Results
 Results from the tutorial exercise can be found in
-<a href="https://storage.googleapis.com/stomm-psivant-com-files/conf_tutr_result.tar.gz" download>
+<a href="https://storage.googleapis.com/stormm-psivant-com-files/conf_tutr_result.tar.gz" download>
 this download link</a>, including SDF files for each system's selected conformers.
 
 ## Overall GPU Uptime: What to Expect
