@@ -110,7 +110,7 @@ As with many other keywords in STORMM's enhanced namelist input, `sdf_item` is r
 
 ## Results
 Results from the tutorial exercise can be found in
-<a href="https://storage.googleapis.com/stomm-psivant-com-files/conf_tutr_result.tar.gz download>
+<a href="https://storage.googleapis.com/stomm-psivant-com-files/conf_tutr_result.tar.gz" download>
 this download link</a>, including SDF files for each system's selected conformers.
 
 ## Overall GPU Uptime: What to Expect
