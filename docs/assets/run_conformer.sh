@@ -10,20 +10,18 @@ fi
 
 # Create the
 echo "&files" > conf_tutorial.in
-for DRUG in drug_example_iso symmetry_C1 symmetry_C2 symmetry_C5 med_1 med_4 ; do
+for DRUG in drug_example_iso symmetry_C2 symmetry_C5 med_1 med_4 ; do
   echo "  -sys { -p ${STORMM_SOURCE}/test/Topology/${DRUG}.top" >> conf_tutorial.in
-  echo "         -c ${STORMM_SOURCE}/test/Topology/${DRUG}.inpcrd }" >> conf_tutorial.in
+  echo "         -c ${STORMM_SOURCE}/test/Trajectory/${DRUG}.inpcrd" >> conf_tutorial.in
+  echo "         -label ${DRUG} -x conf_${DRUG}.sdf x_kind sdf }" >> conf_tutorial.in
 done
-echo "  -x conf.sdf" >> conf_tutorial.in
-echo "  x_kind sdf" >> conf_tutorial.in
 echo "&end" >> conf_tutorial.in
 
-cat > conf_tutorial.in << EOF
+cat >> conf_tutorial.in << EOF
 
 &conformer
   rotation_sample_count 3,
-  trial_limit 100, local_trial_limit 200, final_states 6,
-  core_mask { atoms "@N,CA,C & !(:ACE,NME)", rk3 4.0, grace 1.25 }
+  trial_limit 100, local_trial_limit 30, final_states 6,
   effort LIGHT
 &end
 
@@ -32,7 +30,7 @@ cat > conf_tutorial.in << EOF
 &end
 
 &minimize
-  ncyc 25, cdcyc 0, maxcyc 25, ntpr = 1,
+  ncyc 100, cdcyc 50, maxcyc 500, ntpr = 50,
   clash_vdw_ratio 0.65,
 &end
 
@@ -46,8 +44,12 @@ cat > conf_tutorial.in << EOF
   sdf_item { -title elec_energy     -label ALL -energy ELECTROSTATIC_NONBONDED }
   sdf_item { -title elec_14_energy  -label ALL -energy ELECTROSTATIC_NEAR }
   report_width 99
-  e_precision 2
-  scope cluster_outlier
   syntax matlab                                                                                   
 &end
 EOF
+
+if [ -e ${STORMM_BUILD}/apps/Conf/conformer.stormm.cuda ] ; then
+  ${STORMM_BUILD}/apps/Conf/conformer.stormm.cuda -O -i conf_tutorial.in
+else
+  ${STORMM_BUILD}/apps/Conf/conformer.stormm -O -i conf_tutorial.in
+fi
