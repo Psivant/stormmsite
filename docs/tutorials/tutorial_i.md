@@ -1,7 +1,8 @@
 # A Basic GPU Program in STORMM
 Begin at the beginning.  A GPU program will launch kernels on the device for massive parallel
 processing in a
-[Non-Uniform Memory Access (NUMA)](https://en.wikipedia.org/wiki/Non-uniform_memory_access) framework.  From the perspective of the host, one CPU thread will stage data on the GPU, copying
+[Non-Uniform Memory Access (NUMA)](https://en.wikipedia.org/wiki/Non-uniform_memory_access)
+framework.  From the perspective of the host, one CPU thread will stage data on the GPU, copying
 data from one resource to another, then launch kernels to process that data.  A serial CPU process
 is the administrator for a series of workhorse GPU processes, and this is reflected in the C++ to
 CUDA transition that STORMM facilitates for NVIDIA hardware.

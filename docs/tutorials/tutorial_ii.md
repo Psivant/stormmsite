@@ -273,9 +273,9 @@ There are no interactions between the particles. (Apologies if decoupling the *x
 dimensions, rather than using a polar coordinate system based on the stated step size, is incorrect
 from a theoretical perspective--the purpose is not a formal investigation of random walk diffusion
 but to present C++ and CUDA mechanics.) We create a temporary `Xoroshiro128pGenerator` and use its
-`setState` method to instantly place it on trajectory with a given particle's pseudo-random stream.  The
-state vectors in `rng_states` are what matters: the `Xoroshiro128pGenerator` class object is just
-there to provide its methods for creating new random numbers and making the state vector tick
+`setState` method to instantly place it on the orbit with a given particle's pseudo-random stream.
+The state vectors in `rng_states` are what matters: the `Xoroshiro128pGenerator` class object is
+just there to provide its methods for creating new random numbers and making the state vectors tick
 forward.  After the requested number of steps, we will extract the modified state vector from the
 temporary generator and place it back in storage within `rng_states`.
 ```
@@ -417,8 +417,8 @@ the C++ code, this would be rounding towards zero and `__double2ll_rz` would be 
 In order to complete the program, we will need to add a basic user interface, for which we use the
 standard C `argc` and `argv[]` command line input variables.  An abridged version follows.  STORMM
 comes with substantial support for developers to create their own control blocks and check input
-for validity, as will be demonstrated in a later tutorial.  For the complete code,
-see **/stormm/home/apps/Tutorial/tutorial_ii.cpp**.
+for validity, as will be demonstrated in [a later tutorial](./tutorial_iii).  For the complete
+code, see **/stormm/home/apps/Tutorial/tutorial_ii.cpp**.
 ```
 int main(int argc, const char* argv[]) {
   if (argc < 3) {

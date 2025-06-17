@@ -18,7 +18,7 @@ There are three major steps to passing user input into STORMM, each requiring C+
 density.
 - Establish a new [`NamelistEmulator`](../doxygen/classstormm_1_1namelist_1_1NamelistEmulator.html)
   class object.
-- Run a file stream by that `NamelistEmulator` object to load it up user input directives
+- Run a file stream by that `NamelistEmulator` object to load it up with user input directives
 - Write an original class to offload information from the `NamelistEmulator` and digest it for
   the rest of the program
 The third step is not essential, but in general it is a good idea to streamline the extraction of
@@ -35,7 +35,7 @@ then have that function take the user input file or a
 [`TextFile`](../doxygen/classstormm_1_1parse_1_1TextFile.html) class object that has already loaded
 the input text into memory.  The bulk of this function will involve configuring the
 `NamelistEmulator` with keywords, defaults and help messages.  Before returning the
-`NamelistEmulator` object, the function will load it up using the
+`NamelistEmulator` object, the function will load it up with data using the
 [`readNamelist`](../doxygen/input_8h_source.html) function.  Again, this will search for keywords
 in an ascii text file to convert the user input into a general-purpose dispenser which can then
 dispense the information by issuing queries based on those keywords.  The function that manages
@@ -114,12 +114,12 @@ StarControls::StarControls(const TextFile &input_ascii_text) :
 Once the `StarControls` class object is constructed, getting the number of planets around a star
 no longer requires a series of string comparisons against every keyword in the `&star` namelist,
 it can be retrieved by a single call to the `StarControls::getPlanetCount()` accessor function
-(the contents of which were not written out above, but should be obvious).  The `NamelistEmulator`
-methods such as `assignVariable` and `addKeyword` come with many overloads to give developers
-freedom in organizing the keywords and their associated descriptions.  In a real application, there
-might be more than a dozen keywords in the new input block.  Configuring the `NamelistEmulator` and
-unpacking it in this way will comprise the bulk of the code to write, and is intended to be as
-script-like as possible.
+(the single statement contents of which were not written out above, but should be obvious).  The
+`NamelistEmulator` methods such as `assignVariable` and `addKeyword` come with many overloads to
+give developers freedom in organizing the keywords and their associated descriptions.  In a real
+application, there might be more than a dozen keywords in the new input block.  Configuring the
+`NamelistEmulator` and unpacking it in this way will comprise the bulk of the code to write, and is
+intended to be as script-like as possible.
 
 ## The Command Line is a Namelist, Too!
 The first place STORMM programs take in user information isn't the input file, though: it's the
@@ -146,7 +146,7 @@ with data types, default values, and descriptions.  All of this is done by acces
 input choices when printing a report file at the end of a run.
 
 In order to add help messages for each keyword, we must go to the function wherein the namelist is
-being configured.  The help messages can , in fact, be included with each keyword's configuration,
+configured.  The help messages can, in fact, be included with each keyword's configuration,
 although the `addKeyword` method has many overloads and it can be unwieldy to include so much
 documentation in the space of a single function call.  STORMM also provides the `addHelp` method
 within the `NamelistEmulator` class to set the user documentation (more precisely, `addHelp` will

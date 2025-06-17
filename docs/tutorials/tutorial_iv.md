@@ -97,7 +97,6 @@ force calculations, we will choose an object of the
 [`PhaseSpace`](../doxygen/classstormm_1_1trajectory_1_1PhaseSpace.html) class, and make a
 `std::vector` of these objects to hold the initial coordinates of each system.
 ```
-
 using stormm::topology::AtomGraph;
 using stormm::trajectory::PhaseSpace;
 
@@ -284,7 +283,7 @@ using stormm::trajectory::PhaseSpaceReader;
 We have already covered one qualification to the interactions, that such that the pair is not
 connected by three bonds or fewer (so as to participate in some valence term).
 
-The first qualification to the computation involves how to deal with periodicity.  The `PhaseSpace`
+The next qualification to the computation involves how to deal with periodicity.  The `PhaseSpace`
 objects already created in our program have a member variable `unit_cell` (use the accessor
 `UnitCellType PhaseSpace::getUnitCellType()`, or look at the `unit_cell` member variable in the
 `PhaseSpaceReader` or `PhaseSpaceWriter` class abstracts).  We can use that to determine whether
@@ -326,7 +325,7 @@ method, and the C way, by feeding the class abstract to a free function of the s
 (In fact, both work by being wrappers for the same underlying free function `evaluateLocalMask` in
 the **/stormm/home/src/Potential/local_exclusionmask.h** library, with ways of grabbing the first
 atom's mask and a pointer to a trove of codified data.) Here's the inner loop from above, with the
-exclusion test added (note that the function returns TRUE if the two particle's *should not*
+exclusion test added (note that the function returns TRUE if the two particles *should not*
 interact:
 ```
   double masked_elec_nrg = 0.0;
@@ -479,8 +478,8 @@ away.  Tracking and preventing the incorporation of excluded non-bonded interact
 practice in molecular simulations.
 
 # Creating a Synthesis of All Systems
-With the systems read in and correspondence established, the masterstroke is create a *synthesis*
-of the coordinates and topologies.  The coordinate synthesis is the
+With the systems read in and correspondence established, the masterstroke is to create a
+*synthesis* of the coordinates and topologies.  The coordinate synthesis is the
 [`PhaseSpaceSynthesis`](../doxygen/classstormm_1_1synthesis_1_1PhaseSpaceSynthesis.html), while the
 topology synthesis is the
 [`AtomGraphSynthesis`](../doxygen/classstormm_1_1synthesis_1_1AtomGraphSynthesis.html).  The

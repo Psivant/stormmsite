@@ -14,7 +14,7 @@ closer to the "bare metal."
 ## [A Basic GPU Program in STORMM](./tutorials/tutorial_i)
 Before diving into the molecular mechanics capabilities, understand the means by which STORMM
 identifies an available GPU, manages memory on the CPU host and GPU device, and transfers data
-between the two resources.  For adept developer, the tutorial will also demonstrate the challenges
+between the two resources.  For adept developers, the tutorial will also demonstrate the challenges
 of implementing templated GPU kernels in the context of a C++ program and some fundamental truths
 about GPU computing strategies.
 
